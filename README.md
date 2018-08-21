@@ -7,9 +7,9 @@ spring boot 相关开发实践圣典
 
 dubbo 2.6.2 集成官方dubbo-spring-boot-starter
 
-kafka
+kafka 集成
 
-mongodb
+mongodb 集群
 
 redis 集群
 
