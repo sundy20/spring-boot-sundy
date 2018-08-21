@@ -3,7 +3,7 @@ Configuration:
   Properties:
     Property:
     - name: project.name
-      value: spring-netty-socketio
+      value: springboot-dubbo-consumer
     - name: log.path
       value: /logs/sundy
 

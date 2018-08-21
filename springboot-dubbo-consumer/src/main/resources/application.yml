@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: sundy-netty-socketio
+    name: springboot-dubbo-consumer
   zipkin:
     base-url: http://localhost:9000
 #    kafka:
@@ -42,7 +42,7 @@ logging:
 
 dubbo:
   application:
-    name: sundy-netty-socketio
+    name: springboot-dubbo-consumer
     logger: slf4j
     qosEnable: false
   protocol:
@@ -53,4 +53,4 @@ dubbo:
   registry:
     protocol: zookeeper
     address: localhost:2181
-    file: /tmp/cache/sundy-netty-socketio.cache
+    file: /tmp/cache/springboot-dubbo-consumer.cache

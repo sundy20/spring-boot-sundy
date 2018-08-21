@@ -12,7 +12,7 @@ spring:
   jackson:
     default-property-inclusion: non_null
   application:
-    name: spring-boot-sundy
+    name: springboot-dubbo-provider
   zipkin:
     base-url: http://localhost:9000
 #    kafka:
@@ -35,7 +35,7 @@ spring:
     proxy-target-class: true
   data:
     mongodb:
-      uri: mongodb://gjmetal:gjmetalsms32@139.224.135.191:27017/gjmetal_sms
+      uri: mongodb://test:test@localhost:27017/test
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/test?allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=utf-8
@@ -66,9 +66,9 @@ spring:
           config:
             multi-statement-allow: true
   redis:
-    host: 101.132.103.197
+    host: localhost
     port: 7000
-    password: 0Y0j8Zeu8iis1qIYHJUoUy2OsUD3u57JGeKosvfRKFxm75hpLa
+    password: sdafsdfasf
     timeout: 0
     pool:
       # 最大可用连接数（默认为8，负数表示无限）
@@ -115,7 +115,7 @@ logging:
 
 dubbo:
   application:
-    name: spring-boot-sundy
+    name: springboot-dubbo-provider
     logger: slf4j
     qosEnable: false
   protocol:
@@ -125,5 +125,5 @@ dubbo:
     server: netty4
   registry:
     protocol: zookeeper
-    address: 106.14.212.70:2181
-    file: /tmp/cache/spring-boot-sundy.cache
+    address: localhost:2181
+    file: /tmp/cache/springboot-dubbo-provider.cache

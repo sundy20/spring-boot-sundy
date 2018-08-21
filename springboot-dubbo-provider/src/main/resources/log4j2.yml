@@ -3,7 +3,7 @@ Configuration:
   Properties:
     Property:
     - name: project.name
-      value: spring-boot-sundy
+      value: springboot-dubbo-provider
     - name: log.path
       value: /logs/sundy
 
