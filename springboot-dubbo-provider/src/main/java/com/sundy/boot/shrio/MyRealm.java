@@ -1,4 +1,4 @@
-package com.sundy.boot.shiro;
+package com.sundy.boot.shrio;
 
 import com.sundy.boot.domain.UserBean;
 import com.sundy.boot.domain.UserService;

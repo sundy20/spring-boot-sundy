@@ -1,4 +1,4 @@
-package com.sundy.boot.shiro;
+package com.sundy.boot.shrio;
 
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;

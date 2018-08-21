@@ -1,4 +1,4 @@
-package com.sundy.boot.shiro;
+package com.sundy.boot.shrio;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

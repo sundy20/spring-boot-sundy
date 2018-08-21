@@ -5,7 +5,7 @@ spring boot 相关开发实践圣典
 
 集成如下功能：
 
-dubbo
+dubbo 2.6.2 集成官方dubbo-spring-boot-starter
 
 kafka
 
@@ -15,7 +15,7 @@ redis 集群
 
 自定义注解实现http防重
 
-netflix hystrix 服务熔断降级
+spring cloud netflix hystrix 服务熔断降级
 
 zipkin 调用链以及服务监控
 
@@ -23,7 +23,7 @@ protostuff 序列化
 
 injvm 限流
 
-shiro + jwt token 统一认证
+shrio + jwt token 统一认证
 
 swagger2 在线api文档
 
@@ -41,11 +41,21 @@ sql 打印插件的集成
 
 统一异常处理
 
+mybatis 集成
+
 pagehelper 插件的集成
 
 druid 数据库连接池的集成
 
 log4j2 集成，支持动态在线修改日志级别
+
+lombok 集成
+
+guava 使用
+
+fastjson 集成
+
+java计算工具parsii的集成，强烈推荐这款计算工具，很强大，谁用谁知道
 
 
 
