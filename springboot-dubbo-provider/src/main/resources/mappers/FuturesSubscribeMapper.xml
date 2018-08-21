@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sundy.boot.dao.FuturesSubscribeDao">
+
+    <resultMap type="com.sundy.boot.domain.FuturesSubscribe" id="resultMapOfFuturesSubscribe">
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="contract_id" property="contractId"/>
+        <result column="sort" property="sort"/>
+        <result column="create_at" property="createAt"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_at" property="updateAt"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="deleted" property="deleted"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="FieldsOfFuturesSubscribe">id, user_id,contract_id, sort, create_at, create_by, update_at, update_by, deleted, remark</sql>
+
+    <sql id="FieldsOfFuturesSubscribeWithoutId">user_id,contract_id, sort, create_at, create_by, update_at, update_by, deleted, remark</sql>
+
+    <select id="findById" resultMap="resultMapOfFuturesSubscribe" parameterType="java.lang.Long">
+        select
+        <include refid="FieldsOfFuturesSubscribe"/>
+        from futures_subscribe where id = #{id}
+    </select>
+
+    <select id="findByIds" resultMap="resultMapOfFuturesSubscribe" parameterType="java.util.List">
+        select
+        <include refid="FieldsOfFuturesSubscribe"/>
+        from futures_subscribe where id in
+        <foreach item="item" index="index" collection="list" open="(" separator=", " close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findByExample" resultMap="resultMapOfFuturesSubscribe"
+            parameterType="com.sundy.boot.domain.FuturesSubscribe">
+        select
+        <include refid="FieldsOfFuturesSubscribe"/>
+        from futures_subscribe
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="contractId != null">and contract_id = #{contractId}</if>
+            <if test="sort != null">and sort = #{sort}</if>
+            <if test="createAt != null">and create_at = #{createAt}</if>
+            <if test="createBy != null">and create_by = #{createBy}</if>
+            <if test="updateAt != null">and update_at = #{updateAt}</if>
+            <if test="updateBy != null">and update_by = #{updateBy}</if>
+            <if test="deleted != null">and deleted = #{deleted}</if>
+            <if test="remark != null">and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="com.sundy.boot.domain.FuturesSubscribe">
+        select count(id) from futures_subscribe
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="contractId != null">and contract_id = #{contractId}</if>
+            <if test="sort != null">and sort = #{sort}</if>
+            <if test="createAt != null">and create_at = #{createAt}</if>
+            <if test="createBy != null">and create_by = #{createBy}</if>
+            <if test="updateAt != null">and update_at = #{updateAt}</if>
+            <if test="updateBy != null">and update_by = #{updateBy}</if>
+            <if test="deleted != null">and deleted = #{deleted}</if>
+            <if test="remark != null">and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="findByParams" resultMap="resultMapOfFuturesSubscribe" parameterType="java.util.Map">
+        select
+        <include refid="FieldsOfFuturesSubscribe"/>
+        from futures_subscribe
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="contractId != null">and contract_id = #{contractId}</if>
+            <if test="sort != null">and sort = #{sort}</if>
+            <if test="createAt != null">and date_format(create_at, '%Y-%m-%d') = #{createAt}</if>
+            <if test="createBy != null">and create_by = #{createBy}</if>
+            <if test="updateAt != null">and date_format(update_at, '%Y-%m-%d') = #{updateAt}</if>
+            <if test="updateBy != null">and update_by = #{updateBy}</if>
+            <if test="deleted != null">and deleted = #{deleted}</if>
+            <if test="remark != null">and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="countByParams" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(id) from futures_subscribe
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="contractId != null">and contract_id = #{contractId}</if>
+            <if test="sort != null">and sort = #{sort}</if>
+            <if test="createAt != null">and date_format(create_at, '%Y-%m-%d') = #{createAt}</if>
+            <if test="createBy != null">and create_by = #{createBy}</if>
+            <if test="updateAt != null">and date_format(update_at, '%Y-%m-%d') = #{updateAt}</if>
+            <if test="updateBy != null">and update_by = #{updateBy}</if>
+            <if test="deleted != null">and deleted = #{deleted}</if>
+            <if test="remark != null">and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="findAll" resultMap="resultMapOfFuturesSubscribe">
+        select
+        <include refid="FieldsOfFuturesSubscribe"/>
+        from futures_subscribe
+    </select>
+
+    <insert id="save" parameterType="com.sundy.boot.domain.FuturesSubscribe" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into futures_subscribe(
+        <include refid="FieldsOfFuturesSubscribeWithoutId"/>
+        ) values (
+        #{userId}, #{contractId}, #{sort}, #{createAt}, #{createBy}, #{updateAt}, #{updateBy}, #{deleted},
+        #{remark} )
+    </insert>
+
+    <update id="update" parameterType="com.sundy.boot.domain.FuturesSubscribe" useGeneratedKeys="true"
+            keyProperty="id">
+        update futures_subscribe
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="contractId != null">contract_id = #{contractId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createAt != null">create_at = #{createAt},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateAt != null">update_at = #{updateAt},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateByUid" parameterType="com.sundy.boot.domain.FuturesSubscribe" useGeneratedKeys="true"
+            keyProperty="id">
+        update futures_subscribe
+        <set>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="updateAt != null">update_at = #{updateAt},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+        </set>
+        where user_id = #{userId} and contract_id = #{contractId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+    	delete from futures_subscribe where id = #{id}
+  	</delete>
+
+    <insert id="saveOrUpdate" parameterType="com.sundy.boot.domain.FuturesSubscribe">
+        insert into futures_subscribe (
+        <include refid="FieldsOfFuturesSubscribeWithoutId"/>
+        ) values (
+        #{userId},#{contractId}, #{sort}, #{createAt}, #{createBy}, #{updateAt}, #{updateBy}, #{deleted},
+        #{remark} )
+        on duplicate key update
+        user_id=#{userId}, metal=#{metal}, contract_id=#{contractId}, sort=#{sort}, create_at=#{createAt},
+        create_by=#{createBy}, update_at=#{updateAt}, update_by=#{updateBy}, deleted=#{deleted}, remark=#{remark}
+    </insert>
+
+    <insert id="batchSave" parameterType="java.util.List">
+        insert into futures_subscribe(<include refid="FieldsOfFuturesSubscribeWithoutId"/>) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId}, #{item.contractId}, #{item.sort}, #{item.createAt}, #{item.createBy},
+            #{item.updateAt}, #{item.updateBy}, #{item.deleted}, #{item.remark})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update futures_subscribe
+            <set>
+                user_id=#{item.userId},contract_id=#{item.contractId}, sort=#{item.sort},
+                create_at=#{item.createAt}, create_by=#{item.createBy}, update_at=#{item.updateAt},
+                update_by=#{item.updateBy}, deleted=#{item.deleted}, remark=#{item.remark}
+            </set>
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateByUid" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update futures_subscribe
+            <set>
+                update_at=#{item.updateAt},deleted=#{item.deleted}
+            </set>
+            where user_id = #{item.userId} and contract_id=#{item.contractId}
+        </foreach>
+    </update>
+
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from futures_subscribe where id in
+        <foreach item="item" index="index" collection="list" open="(" separator=", " close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="batchDeleteByUserId" parameterType="com.sundy.boot.domain.FuturesSubscribe">
+        update futures_subscribe
+        set deleted='Y', update_at=#{updateAt}
+        where user_id = #{userId}
+    </update>
+
+</mapper>

@@ -1,0 +1,129 @@
+server:
+  port: 8086
+  context-path: /
+
+application:
+  rate: 5
+  restFilterUrl: /rest/*,/secure/rest/*
+
+spring:
+  profiles:
+    active: dev
+  jackson:
+    default-property-inclusion: non_null
+  application:
+    name: spring-boot-sundy
+  zipkin:
+    base-url: http://localhost:9000
+#    kafka:
+#      topic: zipkin
+#  kafka:
+#    bootstrap-servers: localhost:9092
+  sleuth:
+    sampler:
+        percentage: 1.0
+  thymeleaf:
+    cache: false
+    check-template-location: false
+    content-type: text/html
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+  aop:
+    auto: true
+    proxy-target-class: true
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/test
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/test?allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: plusdb
+      driver-class-name: com.mysql.jdbc.Driver
+
+      #Druid 数据源配置，继承spring.datasource.* 配置，相同则覆盖
+      initial-size: 5
+      max-active: 30
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+
+      # 自定义StatFilter配置
+      filter:
+        stat:
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            multi-statement-allow: true
+  redis:
+    host: localhost
+    port: 7000
+    password: sssdsdsdsd
+    timeout: 0
+    pool:
+      # 最大可用连接数（默认为8，负数表示无限）
+      max-active: 8
+      # 最大空闲连接数（默认为8，负数表示无限）
+      max-idle: 8
+      # 最小空闲连接数（默认为0，该值只有为正数才有作用）
+      min-idle: 0
+      # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
+      max-wait: -1
+
+#redis 集群模式配置
+#    cluster:
+#      nodes:
+#        - 172.19.177.2:7000
+#        - 172.19.177.2:7001
+#        - 172.19.177.2:7002
+
+
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  config-location: classpath:/mybatis-config.xml
+  type-aliases-package: com.sundy.boot.domain
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+ws:
+  host: 0.0.0.0
+  port: 9090
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level:
+    ROOT: info
+    com.sundy.boot: debug
+    org.springframework: info
+
+dubbo:
+  application:
+    name: spring-boot-sundy
+    logger: slf4j
+    qosEnable: false
+  protocol:
+    name: dubbo
+    port: 20881
+    status: server
+    server: netty4
+  registry:
+    protocol: zookeeper
+    address: localhost:2181
+    file: /tmp/cache/spring-boot-sundy.cache

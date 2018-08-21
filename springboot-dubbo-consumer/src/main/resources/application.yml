@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  context-path: /
+
+spring:
+  application:
+    name: sundy-netty-socketio
+  zipkin:
+    base-url: http://localhost:9000
+#    kafka:
+#      topic: zipkin
+#  kafka:
+#    bootstrap-servers: localhost:9092
+  sleuth:
+    sampler:
+        percentage: 1.0
+  thymeleaf:
+    cache: false
+    check-template-location: false
+    content-type: text/html
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+  aop:
+    auto: true
+    proxy-target-class: true
+
+ws:
+  host: 0.0.0.0
+  port: 9099
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level:
+    ROOT: info
+    com.nettysocketio.demo: debug
+    org.springframework: info
+
+dubbo:
+  application:
+    name: sundy-netty-socketio
+    logger: slf4j
+    qosEnable: false
+  protocol:
+    name: dubbo
+    port: 20881
+  consumer:
+    client: netty4
+  registry:
+    protocol: zookeeper
+    address: localhost:2181
+    file: /tmp/cache/sundy-netty-socketio.cache
