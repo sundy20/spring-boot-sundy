@@ -37,7 +37,7 @@ management:
 logging:
   level:
     ROOT: info
-    com.nettysocketio.demo: debug
+    com.sundy: debug
     org.springframework: info
 
 dubbo:
