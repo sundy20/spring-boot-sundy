@@ -10,17 +10,17 @@ public enum ResultCode {
     /**
      * 成功
      */
-    SUCCESS("000000", "SUCCESS"),
+    SUCCESS("2000", "SUCCESS"),
 
     /**
      * 客户端参数错误
      */
-    CLIENT_ERROR("400000", "Client Arguments Error"),
+    CLIENT_ERROR("4000", "Client Arguments Error"),
 
     /**
      * 服务端异常
      */
-    SERVER_ERROR("500000", "Server ERROR");
+    SERVER_ERROR("5000", "Server ERROR");
 
     private String code;
 

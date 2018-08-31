@@ -25,72 +25,65 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> success(T data) {
 
-        Result<T> tResult = new Result<>();
-
-        tResult.setCode(ResultCode.SUCCESS.getCode());
-
-        tResult.setMessage(ResultCode.SUCCESS.getMessage());
-
-        tResult.setData(data);
-
-        return tResult;
+        return new Result<T>().code(ResultCode.SUCCESS.getCode()).data(data).message(ResultCode.SUCCESS.getMessage());
     }
 
     public static <T> Result<T> success(String code, String message) {
 
-        Result<T> tResult = new Result<>();
-
-        tResult.setCode(code);
-
-        tResult.setMessage(message);
-
-        return tResult;
+        return new Result<T>().code(code).message(message);
     }
 
     public static <T> Result<T> failure() {
 
-        Result<T> tResult = new Result<>();
+        return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(ResultCode.SERVER_ERROR.getMessage());
+    }
 
-        tResult.setCode(ResultCode.SERVER_ERROR.getCode());
+    public static <T> Result<T> failure(String message) {
 
-        tResult.setMessage(ResultCode.SERVER_ERROR.getMessage());
-
-        return tResult;
+        return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(message);
     }
 
     public static <T> Result<T> failure(String code, String message) {
 
-        Result<T> tResult = new Result<>();
+        return new Result<T>().code(code).message(message);
+    }
 
-        tResult.setCode(code);
+    public boolean succeed() {
 
-        tResult.setMessage(message);
-
-        return tResult;
+        return this.code.equals(ResultCode.SUCCESS.getCode());
     }
 
     public T getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public Result<T> data(T data) {
+
         this.data = data;
+
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public Result<T> message(String message) {
+
         this.message = message;
+
+        return this;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public Result<T> code(String code) {
+
         this.code = code;
+
+        return this;
     }
 
 }
