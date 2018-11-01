@@ -48,6 +48,11 @@ public class Result<T> implements Serializable {
         return new Result<T>().code(code).message(message);
     }
 
+    public Result<T> successfully(T data) {
+
+        return this.code(ResultCode.SUCCESS.getCode()).message(ResultCode.SUCCESS.getMessage()).data(data);
+    }
+
     public boolean succeed() {
 
         return this.code.equals(ResultCode.SUCCESS.getCode());
