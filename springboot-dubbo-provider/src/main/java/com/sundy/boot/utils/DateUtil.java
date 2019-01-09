@@ -136,4 +136,9 @@ public class DateUtil {
 
         return localDateTime.toLocalTime();
     }
+
+    public static String localDate2string(LocalDate localDate, DatePattern datePattern) {
+
+        return localDate.format(DateTimeFormatter.ofPattern(datePattern.getPattern()));
+    }
 }

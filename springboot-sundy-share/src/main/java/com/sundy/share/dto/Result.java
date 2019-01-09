@@ -5,9 +5,9 @@ import com.sundy.share.enums.ResultCode;
 import java.io.Serializable;
 
 /**
- * 响应对象
- *
- * @author plus
+ * @author zeng.wang
+ * @description 通用响应对象
+ * @date 2018/11/11
  */
 public class Result<T> implements Serializable {
 
@@ -43,6 +43,21 @@ public class Result<T> implements Serializable {
         return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(message);
     }
 
+    public Result<T> clientFailure() {
+
+        return this.code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
+    }
+
+    public static <T> Result<T> clientFailureResult() {
+
+        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
+    }
+
+    public Result<T> clientFailure(String message) {
+
+        return this.code(ResultCode.CLIENT_ERROR.getCode()).message(message);
+    }
+
     public static <T> Result<T> failure(String code, String message) {
 
         return new Result<T>().code(code).message(message);
@@ -53,7 +68,7 @@ public class Result<T> implements Serializable {
         return this.code(ResultCode.SUCCESS.getCode()).message(ResultCode.SUCCESS.getMessage()).data(data);
     }
 
-    public boolean succeed() {
+    public boolean isSucceed() {
 
         return this.code.equals(ResultCode.SUCCESS.getCode());
     }
@@ -90,5 +105,4 @@ public class Result<T> implements Serializable {
 
         return this;
     }
-
 }
