@@ -23,8 +23,14 @@ public class RedisLockComponent {
     private RedisLockRegistry redisLockRegistry;
 
     public boolean lock(String lockKey, int milliseconds) throws InterruptedException {
-        LOGGER.info("lockKey:{},milliseconds:{}", lockKey, milliseconds);
+        LOGGER.info("lock lockKey:{},milliseconds:{}", lockKey, milliseconds);
         Lock lock = redisLockRegistry.obtain(lockKey);
         return lock.tryLock(milliseconds, TimeUnit.MILLISECONDS);
+    }
+
+    public void unlock(String lockKey) {
+        LOGGER.info("unlock lockKey:{}", lockKey);
+        Lock lock = redisLockRegistry.obtain(lockKey);
+        lock.unlock();
     }
 }
