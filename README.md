@@ -17,6 +17,10 @@ redis 集群
 
 spring cloud netflix hystrix 服务熔断降级
 
+spring-integration-redis redis分布式锁
+
+snowflake 分布式唯一id
+
 zipkin 调用链以及服务监控
 
 protostuff 序列化
