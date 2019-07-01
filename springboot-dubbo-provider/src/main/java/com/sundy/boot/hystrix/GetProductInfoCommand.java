@@ -14,6 +14,10 @@ import org.springframework.stereotype.Component;
  * @author zeng.wang
  * @description 获取产品信息HystrixCommand
  * @date 2019-07-01
+ *
+ * 滑动窗口中，最少 20 个请求，才可能触发断路。
+ * 异常比例达到 40% 时，才触发断路。
+ * 断路后 3000ms 内，所有请求都被 reject，直接走 fallback 降级，不会调用 run() 方法。3000ms 过后，变为 half-open 状态。
  */
 @Slf4j
 @Component
