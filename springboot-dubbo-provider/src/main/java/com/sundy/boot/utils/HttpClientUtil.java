@@ -134,7 +134,8 @@ public class HttpClientUtil {
     private HttpClientUtil() {
         //设置连接参数
         ConnectionConfig connConfig = ConnectionConfig.custom().setCharset(Charset.forName(DEFAULT_ENCODING)).build();
-        SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(SOCKET_TIMEOUT).setSoKeepAlive(true).setTcpNoDelay(true).build();
+        SocketConfig socketConfig =
+                SocketConfig.custom().setSoTimeout(SOCKET_TIMEOUT).setSoKeepAlive(true).setTcpNoDelay(true).build();
         RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder.create();
         ConnectionSocketFactory plainSF = new PlainConnectionSocketFactory();
         registryBuilder.register("http", plainSF);
@@ -168,7 +169,8 @@ public class HttpClientUtil {
         //构建客户端重试控制器   并设置重试次数
         HttpRequestRetryHandler myRetryHandler = setRetryHandler(RETRY_TIMES);
 
-        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create().setDefaultCookieStore(cookieStore).setConnectionManager(connManager)
+        HttpClientBuilder httpClientBuilder =
+                HttpClientBuilder.create().setDefaultCookieStore(cookieStore).setConnectionManager(connManager)
                 .setRetryHandler(myRetryHandler);
 
         //启用gzip deflate压缩传输
@@ -253,6 +255,10 @@ public class HttpClientUtil {
         return response != null ? response.getEntity().getContent() : null;
     }
 
+    public String doGetForString(String url) throws Exception {
+        return HttpClientUtil.readStream(this.doGetForStream(url), DEFAULT_ENCODING);
+    }
+
     public String doGetForString(String url, String charset) throws Exception {
         return HttpClientUtil.readStream(this.doGetForStream(url), charset);
     }
@@ -286,7 +292,8 @@ public class HttpClientUtil {
      */
     private HttpResponse doGet(String url, Map<String, String> queryParams, Map<String, String> header) throws Exception {
         HttpGet gm = new HttpGet();
-        RequestConfig.Builder requestConfig = RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT);
+        RequestConfig.Builder requestConfig =
+                RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT);
 
         gm.setConfig(requestConfig.build());
         //如果有请求头参数，添加进header中
@@ -329,7 +336,8 @@ public class HttpClientUtil {
         return HttpClientUtil.readStream(this.doPostForStream(url, formParams), charset);
     }
 
-    public String doPostForString(String url, Map<String, String> formParams, Map<String, String> header, String charset) throws Exception {
+    public String doPostForString(String url, Map<String, String> formParams, Map<String, String> header,
+                                  String charset) throws Exception {
         return HttpClientUtil.readStream(this.doPostForStream(url, formParams, header), charset);
     }
 
@@ -338,7 +346,8 @@ public class HttpClientUtil {
     }
 
     public String doJsonPostForString(String url, String params) throws Exception {
-        return HttpClientUtil.readStream(this.doJsonPostForStream(url, params, null, DEFAULT_ENCODING), DEFAULT_ENCODING);
+        return HttpClientUtil.readStream(this.doJsonPostForStream(url, params, null, DEFAULT_ENCODING),
+                DEFAULT_ENCODING);
     }
 
     public String doJsonPostForString(String url, String params, Map<String, String> header, String charset) throws Exception {
@@ -368,7 +377,8 @@ public class HttpClientUtil {
     /**
      * 基本的Post请求
      */
-    private HttpResponse doPost(String url, Map<String, String> queryParams, Map<String, String> formParams, Map<String, String> header) throws Exception {
+    private HttpResponse doPost(String url, Map<String, String> queryParams, Map<String, String> formParams,
+                                Map<String, String> header) throws Exception {
         HttpPost pm = new HttpPost();
         URIBuilder builder = new URIBuilder(url);
         //填入查询参数
@@ -390,7 +400,8 @@ public class HttpClientUtil {
         }
 
         //设置超时
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT).build();
+        RequestConfig requestConfig =
+                RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT).build();
         pm.setConfig(requestConfig);
         log.info("------httpclient post url: " + url + " formParams : " + formParams);
         return client.execute(pm);
@@ -400,7 +411,8 @@ public class HttpClientUtil {
     /**
      * 基本json方式post请求
      */
-    private HttpResponse doJsonPost(String url, Map<String, String> queryParams, String params, Map<String, String> header, String charset) throws Exception {
+    private HttpResponse doJsonPost(String url, Map<String, String> queryParams, String params,
+                                    Map<String, String> header, String charset) throws Exception {
         HttpPost pm = new HttpPost();
         URIBuilder builder = new URIBuilder(url);
         //填入查询参数
@@ -421,7 +433,8 @@ public class HttpClientUtil {
         pm.setEntity(s);
 
         //设置超时
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT).build();
+        RequestConfig requestConfig =
+                RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setConnectionRequestTimeout(CONNECTION_TIMEOUT).setSocketTimeout(CONNECTION_TIMEOUT).build();
         pm.setConfig(requestConfig);
         log.info("------httpclient post url: " + url + "pa");
         return client.execute(pm);

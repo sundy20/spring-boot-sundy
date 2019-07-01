@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>com.sundy</groupId>
-            <artifactId>spring-sundy-share</artifactId>
+            <artifactId>springboot-sundy-share</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -294,7 +294,6 @@
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-redis</artifactId>
         </dependency>
-
     </dependencies>
 
     <repositories>
