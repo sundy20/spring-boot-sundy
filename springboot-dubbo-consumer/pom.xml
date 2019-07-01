@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>com.sundy</groupId>
-            <artifactId>spring-sundy-share</artifactId>
+            <artifactId>springboot-sundy-share</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

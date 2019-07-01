@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author zeng.wang
- * @description 产品信息
+ * @description 商品信息
  * @date 2019-07-01
  */
 public class ProductInfoDTO implements Serializable {
