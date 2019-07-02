@@ -15,7 +15,7 @@ redis 集群
 
 自定义注解实现http防重
 
-spring cloud netflix hystrix 服务熔断降级
+spring cloud netflix hystrix 服务熔断，限流，降级，隔离
 
 spring-integration-redis redis分布式锁
 
@@ -55,7 +55,7 @@ log4j2 集成，支持动态在线修改日志级别
 
 lombok 集成
 
-guava 使用
+guava redis 布隆过滤器 使用
 
 fastjson 集成
 
