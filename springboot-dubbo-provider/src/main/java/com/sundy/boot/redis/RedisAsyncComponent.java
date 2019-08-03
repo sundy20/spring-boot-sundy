@@ -2,9 +2,7 @@ package com.sundy.boot.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -32,17 +30,6 @@ public class RedisAsyncComponent<K, V> {
      * @return Future<V>
      */
     public Future<V> asyncGet(K k) {
-        return threadPoolTaskExecutor.submit(() -> redisTemplate.execute((RedisCallback<V>) redisConnection -> {
-            byte[] bytes = redisConnection.get(getKeyBytes(k));
-            return deserializeValue(bytes);
-        }));
-    }
-
-    private byte[] getKeyBytes(K k) {
-        return ((RedisSerializer<K>) redisTemplate.getKeySerializer()).serialize(k);
-    }
-
-    private V deserializeValue(byte[] bytes) {
-        return ((RedisSerializer<V>) redisTemplate.getValueSerializer()).deserialize(bytes);
+        return threadPoolTaskExecutor.submit(() -> redisTemplate.opsForValue().get(k));
     }
 }
