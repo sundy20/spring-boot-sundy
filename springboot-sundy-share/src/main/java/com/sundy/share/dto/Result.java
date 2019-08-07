@@ -33,6 +33,11 @@ public class Result<T> implements Serializable {
         return new Result<T>().code(code).message(message);
     }
 
+    public Result<T> successfully(T data) {
+
+        return this.code(ResultCode.SUCCESS.getCode()).message(ResultCode.SUCCESS.getMessage()).data(data);
+    }
+
     public static <T> Result<T> failure() {
 
         return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(ResultCode.SERVER_ERROR.getMessage());
@@ -43,29 +48,24 @@ public class Result<T> implements Serializable {
         return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(message);
     }
 
-    public Result<T> clientFailure() {
-
-        return this.code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
-    }
-
-    public static <T> Result<T> clientFailureResult() {
-
-        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
-    }
-
-    public Result<T> clientFailure(String message) {
-
-        return this.code(ResultCode.CLIENT_ERROR.getCode()).message(message);
-    }
-
     public static <T> Result<T> failure(String code, String message) {
 
         return new Result<T>().code(code).message(message);
     }
 
-    public Result<T> successfully(T data) {
+    public static <T> Result<T> clientFailure() {
 
-        return this.code(ResultCode.SUCCESS.getCode()).message(ResultCode.SUCCESS.getMessage()).data(data);
+        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
+    }
+
+    public static <T> Result<T> clientFailure(String message) {
+
+        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(message);
+    }
+
+    public static <T> Result<T> clientFailure(String code, String message) {
+
+        return new Result<T>().code(code).message(message);
     }
 
     public boolean isSucceed() {
