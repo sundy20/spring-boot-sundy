@@ -1,5 +1,6 @@
 package com.sundy.boot.web.config;
 
+import com.sundy.boot.web.aop.CacheInterceptor;
 import com.sundy.boot.web.filter.CommonFilter;
 import com.sundy.boot.web.filter.JvmTPSLimiterFilter;
 import com.sundy.boot.web.filter.RestInterceptor;

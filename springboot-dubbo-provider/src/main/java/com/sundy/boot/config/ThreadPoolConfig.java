@@ -1,5 +1,6 @@
 package com.sundy.boot.config;
 
+import com.sundy.boot.web.aop.CacheInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -27,5 +28,15 @@ public class ThreadPoolConfig {
         executor.setAwaitTerminationSeconds(threadCount);
         executor.setWaitForTasksToCompleteOnShutdown(true);
         return executor;
+    }
+
+    @Bean
+    public CacheInterceptor cacheInterceptor() {
+        CacheInterceptor cacheInterceptor = new CacheInterceptor();
+        //500 * 20 = 1w qps
+        cacheInterceptor.setFlowControl(500);
+        //100 ms
+        cacheInterceptor.setFlowControlWait(100);
+        return cacheInterceptor;
     }
 }
