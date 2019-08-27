@@ -1,10 +1,10 @@
-package com.sundy.nettysocketio.share;
+package com.sundy.nettysocketio.message;
 
 import java.io.Serializable;
 
 /**
  * @author plus.wang
- * @description 行情-合约对应数据
+ * @description 行情消息
  * @date 2018/4/18
  */
 public class FuturesMessage implements Serializable {

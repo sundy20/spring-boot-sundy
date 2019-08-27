@@ -1,0 +1,16 @@
+### Maven template
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+.idea/
+*.iml
+.DS_Store/
+
+
+.project
+.settings/
+.vscode/
+.classpath
+.factorypath
+*.DS_Store
+.gitignore
