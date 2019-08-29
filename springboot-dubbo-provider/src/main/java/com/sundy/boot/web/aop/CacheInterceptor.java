@@ -73,7 +73,7 @@ public class CacheInterceptor extends ApplicationContextUtil {
                     try {
                         jsonValue = jsonFuture.get(cache.waitTimeout(), TimeUnit.MILLISECONDS);
                     } catch (Exception e) {
-                        logger.error("cache error", e);
+                        logger.error("async get cache error", e);
                     }
                 }
             }
@@ -99,7 +99,7 @@ public class CacheInterceptor extends ApplicationContextUtil {
                     redisTemplate.boundValueOps(key).set(v, getTtlSeconds(cache.ttl()), TimeUnit.SECONDS);
                 }
             } catch (Exception e) {
-                logger.error("cache fetch error", e);
+                logger.error("cache set error", e);
             }
             return r;
         } finally {
