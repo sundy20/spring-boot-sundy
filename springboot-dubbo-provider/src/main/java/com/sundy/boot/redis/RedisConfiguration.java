@@ -19,7 +19,7 @@ public class RedisConfiguration {
         return new JedisConnectionFactory();
     }
 
-    @Bean
+    @Bean("redisTemplate")
     public <K, V> RedisTemplate<K, V> redisTemplate() {
         RedisTemplate<K, V> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());

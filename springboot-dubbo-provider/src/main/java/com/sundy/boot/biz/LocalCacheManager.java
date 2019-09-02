@@ -54,13 +54,13 @@ public abstract class LocalCacheManager<T> implements ApplicationListener<Contex
                 refresh();
                 executorService = Executors.newScheduledThreadPool(poolSize);
                 executorService.scheduleWithFixedDelay(this::refresh, delay, delay, TimeUnit.SECONDS);
-                log.info("sales cache initialized");
+                log.info("local cache initialized");
             } catch (Exception e) {
-                log.error("sales cache exception", e);
-                throw new RuntimeException("sales cache fail to initialized");
+                log.error("local cache exception", e);
+                throw new RuntimeException("local cache fail to initialized");
             }
         } else {
-            log.info("sales cache already initialed");
+            log.info("local cache already initialed");
         }
     }
 

@@ -17,6 +17,7 @@ import java.util.concurrent.Future;
 public class RedisAsyncComponent<K, V> {
 
     @Autowired
+    @Qualifier("redisTemplate")
     private RedisTemplate<K, V> redisTemplate;
 
     @Autowired

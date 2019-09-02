@@ -7,9 +7,10 @@ package com.sundy.boot.biz.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sundy.boot.annotation.Cache;
+import com.sundy.boot.biz.FuturesSubscribeBiz;
 import com.sundy.boot.dao.FuturesSubscribeDao;
 import com.sundy.boot.domain.FuturesSubscribe;
-import com.sundy.boot.biz.FuturesSubscribeBiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,6 +124,8 @@ public class FuturesSubscribeBizImpl implements FuturesSubscribeBiz {
     }
 
     @Override
+    @Cache(key = "futuresSubscribe_", waitTimeout = 200, asyncExecutor =
+            "redisExecutor", cache = "redisTemplate", cacheNull = true, ttl = 600)
     public FuturesSubscribe get(Long id) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);

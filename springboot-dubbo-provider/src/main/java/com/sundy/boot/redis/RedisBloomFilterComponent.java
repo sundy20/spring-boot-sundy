@@ -1,6 +1,7 @@
 package com.sundy.boot.redis;
 
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 public class RedisBloomFilterComponent {
 
     @Resource
+    @Qualifier("redisTemplate")
     private RedisTemplate<String, Object> redisTemplate;
 
     /**

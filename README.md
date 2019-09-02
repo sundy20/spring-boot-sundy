@@ -27,7 +27,7 @@ protostuff 序列化
 
 injvm 限流
 
-shrio + jwt token 统一认证
+shiro + jwt token 统一认证
 
 swagger2 在线api文档
 
