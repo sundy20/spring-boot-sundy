@@ -124,7 +124,7 @@ public class FuturesSubscribeBizImpl implements FuturesSubscribeBiz {
     }
 
     @Override
-    @Cache(key = "futuresSubscribe_", waitTimeout = 200, asyncExecutor =
+    @Cache(key = "#id", prefix = "futuresSubscribe_", waitTimeout = 200, asyncExecutor =
             "redisExecutor", cache = "redisTemplate", cacheNull = true, ttl = 600)
     public FuturesSubscribe get(Long id) {
         Map<String, Object> params = new HashMap<String, Object>();
