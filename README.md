@@ -19,6 +19,10 @@ spring cloud netflix hystrix 服务熔断，限流，降级，隔离
 
 spring-integration-redis redis分布式锁
 
+guava cache 和 caffeine cache
+
+guava retry 和 spring retry
+
 snowflake 分布式唯一id
 
 zipkin 调用链以及服务监控
