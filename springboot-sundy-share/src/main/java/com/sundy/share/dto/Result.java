@@ -5,7 +5,7 @@ import com.sundy.share.enums.ResultCode;
 import java.io.Serializable;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 通用响应对象
  * @date 2018/11/11
  */

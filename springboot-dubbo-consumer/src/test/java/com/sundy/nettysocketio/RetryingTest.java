@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description guava-retrying测试
  * @date 2019-09-06
  */

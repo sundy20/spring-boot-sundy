@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.Future;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description redis异步组件
  * @date 2019-06-25
  */

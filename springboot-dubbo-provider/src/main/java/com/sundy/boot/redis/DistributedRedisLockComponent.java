@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description redis分布式锁组件
  * @date 2019-06-14
  */

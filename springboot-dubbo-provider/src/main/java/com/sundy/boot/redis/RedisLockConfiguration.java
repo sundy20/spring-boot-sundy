@@ -7,7 +7,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.integration.redis.util.RedisLockRegistry;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description redis分布式锁配置
  * @date 2019-06-14
  */

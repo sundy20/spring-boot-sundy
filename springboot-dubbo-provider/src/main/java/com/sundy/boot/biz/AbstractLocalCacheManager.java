@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 本地内存抽象管理
  * @date 2019-08-26
  */

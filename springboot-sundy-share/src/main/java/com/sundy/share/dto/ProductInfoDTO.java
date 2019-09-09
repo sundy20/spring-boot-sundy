@@ -3,7 +3,7 @@ package com.sundy.share.dto;
 import java.io.Serializable;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 商品信息
  * @date 2019-07-01
  */

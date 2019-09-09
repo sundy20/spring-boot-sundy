@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description spring线程池配置
  * @date 2019-06-25
  */

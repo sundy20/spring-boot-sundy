@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description redis分布式锁组件
  * @date 2019-06-14
  */

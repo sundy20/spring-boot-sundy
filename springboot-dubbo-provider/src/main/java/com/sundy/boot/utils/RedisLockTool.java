@@ -5,7 +5,7 @@ import redis.clients.jedis.Jedis;
 import java.util.Collections;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description redis分布式锁（针对单机redis服务）
  * @date 2019-06-20
  */

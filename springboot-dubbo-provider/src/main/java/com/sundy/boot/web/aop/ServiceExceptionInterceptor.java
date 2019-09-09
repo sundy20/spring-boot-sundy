@@ -10,7 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 服务层异常答应切面
  * @date 2019-08-26
  */

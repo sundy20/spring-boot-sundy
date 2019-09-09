@@ -7,7 +7,7 @@ import com.sundy.share.dto.ProductInfoDTO;
 import com.sundy.share.service.ProductInfoService;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 商品信息服务默认实现
  * @date 2019-07-01
  */

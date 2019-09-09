@@ -5,7 +5,7 @@ import com.google.common.hash.Funnel;
 import com.google.common.hash.Hashing;
 
 /**
- * @author zeng.wang
+ * @author plus.wang
  * @description 布隆过滤器helper
  * @date 2019-07-02
  */
