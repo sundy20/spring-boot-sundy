@@ -40,9 +40,8 @@ public abstract class LocalCacheManager<T> implements ApplicationListener<Contex
             if (configs != null) {
                 configListCache.set(configs);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("{} cache refresh", traceName(), e);
-            throw e;
         }
     }
 
