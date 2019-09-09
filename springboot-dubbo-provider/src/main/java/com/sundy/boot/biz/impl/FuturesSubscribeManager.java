@@ -1,7 +1,7 @@
 package com.sundy.boot.biz.impl;
 
+import com.sundy.boot.biz.AbstractLocalCacheManager;
 import com.sundy.boot.biz.FuturesSubscribeBiz;
-import com.sundy.boot.biz.LocalCacheManager;
 import com.sundy.boot.domain.FuturesSubscribe;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class FuturesSubscribeManager extends LocalCacheManager<FuturesSubscribe> {
-
+public class FuturesSubscribeManager extends AbstractLocalCacheManager<FuturesSubscribe> {
+    private static final String THREAD_NAME_PREFIX = "FuturesSubscribeLocalCache-";
     @Autowired
     private FuturesSubscribeBiz futuresSubscribeBiz;
 
     public FuturesSubscribeManager() {
-        super(1, 300);
+        super(1, 300, THREAD_NAME_PREFIX);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.sundy.boot.biz;
 
+import com.sundy.boot.utils.ThreadPollUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -16,12 +16,14 @@ import java.util.concurrent.atomic.AtomicReference;
  * @date 2019-08-26
  */
 @Slf4j
-public abstract class LocalCacheManager<T> implements ApplicationListener<ContextRefreshedEvent> {
+public abstract class AbstractLocalCacheManager<T> implements ApplicationListener<ContextRefreshedEvent> {
     protected final AtomicReference<List<T>> configListCache = new AtomicReference<>();
+    protected final String threadNamePrefix;
     protected final int poolSize;
     protected final int delay;
 
-    public LocalCacheManager(int poolSize, int delay) {
+    public AbstractLocalCacheManager(int poolSize, int delay, String threadNamePrefix) {
+        this.threadNamePrefix = threadNamePrefix;
         this.poolSize = poolSize;
         this.delay = delay;
     }
@@ -29,10 +31,10 @@ public abstract class LocalCacheManager<T> implements ApplicationListener<Contex
     /**
      * periodic refresher thread pool
      */
-    private ScheduledExecutorService executorService;
+    private ScheduledExecutorService scheduledExecutorService;
 
     /**
-     * refresh the sales
+     * refresh the data
      */
     public synchronized void refresh() {
         try {
@@ -51,8 +53,8 @@ public abstract class LocalCacheManager<T> implements ApplicationListener<Contex
         if (configListCache.get() == null) {
             try {
                 refresh();
-                executorService = Executors.newScheduledThreadPool(poolSize);
-                executorService.scheduleWithFixedDelay(this::refresh, delay, delay, TimeUnit.SECONDS);
+                scheduledExecutorService = ThreadPollUtil.defineScheduledThreadPool(poolSize, threadNamePrefix);
+                scheduledExecutorService.scheduleWithFixedDelay(this::refresh, delay, delay, TimeUnit.SECONDS);
                 log.info("local cache initialized");
             } catch (Exception e) {
                 log.error("local cache exception", e);
