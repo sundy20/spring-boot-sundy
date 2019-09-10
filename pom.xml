@@ -3,17 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
     <groupId>com.sundy</groupId>
     <artifactId>spring-boot-sundy</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>spring-boot-sundy</name>
 
-
     <modules>
+        <module>./springboot-dubbo-share</module>
         <module>./springboot-dubbo-provider</module>
-        <module>./springboot-sundy-share</module>
         <module>./springboot-dubbo-consumer</module>
     </modules>
 

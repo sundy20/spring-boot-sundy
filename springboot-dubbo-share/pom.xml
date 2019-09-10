@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sundy</groupId>
-    <artifactId>springboot-sundy-share</artifactId>
+    <artifactId>springboot-dubbo-share</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>springboot-sundy-share</name>
+    <name>springboot-dubbo-share</name>
     <description>dubbo share project for Spring Boot</description>
 
     <parent>

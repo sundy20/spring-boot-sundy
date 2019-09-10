@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8088
   context-path: /
 
 application:
@@ -21,7 +21,7 @@ spring:
 #    bootstrap-servers: localhost:9092
   sleuth:
     sampler:
-        percentage: 1.0
+      percentage: 1.0
   thymeleaf:
     cache: false
     check-template-location: false
@@ -67,7 +67,7 @@ spring:
             multi-statement-allow: true
   redis:
     host: localhost
-    port: 7000
+    port: 6379
     password: sdafsdfasf
     timeout: 0
     pool:
