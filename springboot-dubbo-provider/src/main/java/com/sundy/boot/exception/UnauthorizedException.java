@@ -7,15 +7,11 @@ package com.sundy.boot.exception;
  */
 public class UnauthorizedException extends RuntimeException {
 
-    private static final long serialVersionUID = 8460881761376399537L;
-
     public UnauthorizedException() {
-
         super();
     }
 
     public UnauthorizedException(String msg) {
-
         super(msg);
     }
 }

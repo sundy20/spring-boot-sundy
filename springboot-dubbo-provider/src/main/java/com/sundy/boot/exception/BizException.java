@@ -6,35 +6,20 @@ package com.sundy.boot.exception;
  * @author plus.wang
  * @description 业务通用异常
  */
-public class BizException extends RuntimeException {
-
-    private static final long serialVersionUID = -9079010183705787652L;
+public class BizException extends Exception {
 
     private String errorCode;
 
-    public BizException() {
-
-    }
-
-    public BizException(String message) {
-
-        super(message);
-    }
-
-    public BizException(String errorCode, String message) {
-
-        this(errorCode, message, null);
-    }
-
-    public BizException(String errorCode, String message, Exception exception) {
-
-        super(message, exception);
-
+    public BizException(String errorCode, String errorMessage) {
+        super(errorMessage);
         this.errorCode = errorCode;
     }
 
-    public String getErrorCode() {
+    public BizException(ErrorCodeEnum errorCodeEnum) {
+        this(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
+    }
 
+    public String getErrorCode() {
         return errorCode;
     }
 }
