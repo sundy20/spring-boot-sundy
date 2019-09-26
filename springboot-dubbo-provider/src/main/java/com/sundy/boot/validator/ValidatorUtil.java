@@ -1,10 +1,11 @@
 package com.sundy.boot.validator;
 
-import javax.validation.Configuration;
+import org.hibernate.validator.HibernateValidator;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,33 +17,18 @@ import java.util.Set;
  * @since JDK 1.8
  */
 public class ValidatorUtil {
-
-    private static final Configuration<?> config;
-
-    private static final Validator validator;
-
-    static {
-
-        config = Validation.byDefaultProvider().configure();
-
-        validator = config.buildValidatorFactory().getValidator();
-
-    }
+    /**
+     * 开启快速结束模式 failFast (true)
+     */
+    private static final Validator VALIDATOR =
+            Validation.byProvider(HibernateValidator.class).configure().failFast(false).buildValidatorFactory().getValidator();
 
     public static <T> Map<String, String> objectCheck(T object, Class<?>... groups) {
-
-        Map<String, String> resultMap = new LinkedHashMap<>();
-
-        Set<ConstraintViolation<T>> set = validator.validate(object, groups);
-
-        for (ConstraintViolation<T> cv : set) {
-
-            resultMap.put(cv.getPropertyPath().toString(), cv.getMessage());
-
+        Map<String, String> resultMap = new HashMap<>();
+        Set<ConstraintViolation<T>> constraintViolationSet = VALIDATOR.validate(object, groups);
+        for (ConstraintViolation<T> constraintViolation : constraintViolationSet) {
+            resultMap.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
         }
-
         return resultMap;
-
     }
-
 }
