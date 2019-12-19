@@ -6,7 +6,6 @@ package com.sundy.boot.utils;
  * @date 2018/5/10
  */
 public enum DatePattern {
-
     yyyyMMddHHmmssSSS("yyyy-MM-dd HH:mm:ss.SSS"),
     yyyyMMddHHmmss("yyyy-MM-dd HH:mm:ss"),
     yyyyMMddHHmmWithOut("yyyyMMddHHmm"),
@@ -23,7 +22,7 @@ public enum DatePattern {
     HHmm("HH:mm"),
     dd("dd");
 
-    private DatePattern(String pattern) {
+    DatePattern(String pattern) {
         this.pattern = pattern;
     }
 
