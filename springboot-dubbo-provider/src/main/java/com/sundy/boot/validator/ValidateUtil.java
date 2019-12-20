@@ -16,7 +16,7 @@ import java.util.Set;
  * @version 1.0
  * @since JDK 1.8
  */
-public class ValidatorUtil {
+public class ValidateUtil {
     /**
      * 开启快速结束模式 failFast (true)
      */
