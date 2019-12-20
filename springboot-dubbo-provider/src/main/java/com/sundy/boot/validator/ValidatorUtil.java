@@ -23,7 +23,7 @@ public class ValidatorUtil {
     private static final Validator VALIDATOR =
             Validation.byProvider(HibernateValidator.class).configure().failFast(false).buildValidatorFactory().getValidator();
 
-    public static <T> Map<String, String> objectCheck(T object, Class<?>... groups) {
+    public static <T> Map<String, String> validateBean(T object, Class<?>... groups) {
         Map<String, String> resultMap = new HashMap<>();
         Set<ConstraintViolation<T>> constraintViolationSet = VALIDATOR.validate(object, groups);
         for (ConstraintViolation<T> constraintViolation : constraintViolationSet) {

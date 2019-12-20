@@ -20,29 +20,20 @@ public class ValidateVOUtil {
 
     private static final Logger log = LoggerFactory.getLogger(ValidateVOUtil.class);
 
-    public static <T> Map<String, String> checkVO(T obj, Class<?>... groups) {
-
+    public static <T> Map<String, String> validateVO(T obj, Class<?>... groups) {
         if (null == obj) {
-
             log.info("前端所传的参数为null");
-
             return new HashMap<String, String>() {
-
                 {
                     put("voInstance", "vo对象不能为null");
                 }
             };
         }
-
-        Map<String, String> validateResMap = ValidatorUtil.objectCheck(obj, groups);
-
+        Map<String, String> validateResMap = ValidatorUtil.validateBean(obj, groups);
         if (!CollectionUtils.isEmpty(validateResMap)) {
-
             log.info("业务参数校验失败,校验结果：{}", JSON.toJSONString(validateResMap));
-
             return validateResMap;
         }
-
         return Collections.emptyMap();
     }
 }
