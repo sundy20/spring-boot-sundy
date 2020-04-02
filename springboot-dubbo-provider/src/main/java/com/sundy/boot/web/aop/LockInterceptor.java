@@ -24,7 +24,9 @@ import redis.clients.jedis.JedisCommands;
 @Aspect
 public class LockInterceptor extends ApplicationContextUtil {
     private static final Logger logger = LoggerFactory.getLogger(LockInterceptor.class);
-    private static final String OK = "OK";
+    private static final String LOCK_SUCCESS = "OK";
+    private static final String SET_IF_NOT_EXIST = "NX";
+    private static final String SET_WITH_EXPIRE_TIME = "PX";
 
     @Around("@annotation(lock)")
     public Object invoke(ProceedingJoinPoint proceedingJoinPoint, Lock lock) throws Throwable {
@@ -68,8 +70,8 @@ public class LockInterceptor extends ApplicationContextUtil {
     private Boolean lock(RedisTemplate<String, String> redisTemplate, String key, Integer expireMilliseconds) {
         String result = redisTemplate.execute((RedisCallback<String>) connection -> {
             JedisCommands conn = (JedisCommands) connection.getNativeConnection();
-            return conn.set(key, "", "NX", "PX", expireMilliseconds);
+            return conn.set(key, "", SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireMilliseconds);
         });
-        return OK.equals(result);
+        return LOCK_SUCCESS.equals(result);
     }
 }
