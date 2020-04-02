@@ -1,6 +1,7 @@
 package com.sundy.boot.config;
 
 import com.sundy.boot.web.aop.CacheInterceptor;
+import com.sundy.boot.web.aop.LockInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -38,5 +39,10 @@ public class ThreadPoolConfig {
         //100 ms
         cacheInterceptor.setFlowControlWait(100);
         return cacheInterceptor;
+    }
+
+    @Bean
+    public LockInterceptor lockInterceptor() {
+        return new LockInterceptor();
     }
 }

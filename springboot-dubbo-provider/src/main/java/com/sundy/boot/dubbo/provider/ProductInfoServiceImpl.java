@@ -3,6 +3,7 @@ package com.sundy.boot.dubbo.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.sundy.boot.annotation.Lock;
 import com.sundy.share.dto.ProductInfoDTO;
 import com.sundy.share.service.ProductInfoService;
 
@@ -13,6 +14,7 @@ import com.sundy.share.service.ProductInfoService;
  */
 @Service(version = "1.0")
 public class ProductInfoServiceImpl implements ProductInfoService {
+
     /**
      * 根据商品id获取商品信息
      *
@@ -39,6 +41,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "512"),
             })
     @Override
+    @Lock(key = "#productId", prefix = "product.lock", cache = "redisTemplate", ttl = 10)
     public ProductInfoDTO getProductInfo(Long productId) {
         ProductInfoDTO productInfoDTO = new ProductInfoDTO();
         productInfoDTO.setProductId(productId);
