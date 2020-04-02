@@ -17,7 +17,7 @@ redis 集群
 
 spring cloud netflix hystrix 服务熔断，限流，降级，隔离
 
-spring-integration-redis redis分布式锁
+spring-integration-redis redis分布式锁(单机/集群)
 
 guava cache 和 caffeine cache
 
