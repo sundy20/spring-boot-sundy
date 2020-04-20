@@ -18,10 +18,10 @@ import java.util.Set;
  */
 public class ValidateUtil {
     /**
-     * 开启快速结束模式 failFast (true)
+     * 开启快速结束模式 failFast (true) 快速失败模式在校验过程中，当遇到第一个不满足条件的参数时就立即返回，不再继续后面参数的校验
      */
     private static final Validator VALIDATOR =
-            Validation.byProvider(HibernateValidator.class).configure().failFast(false).buildValidatorFactory().getValidator();
+            Validation.byProvider(HibernateValidator.class).configure().failFast(true).buildValidatorFactory().getValidator();
 
     public static <T> Map<String, String> validateBean(T object, Class<?>... groups) {
         Map<String, String> resultMap = new HashMap<>();
