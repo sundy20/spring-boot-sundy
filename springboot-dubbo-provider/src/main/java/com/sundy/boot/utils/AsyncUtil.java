@@ -44,8 +44,8 @@ public class AsyncUtil {
         return new DefinedCompletableFuture<>(completableFuture);
     }
 
-    public static <T> Future<T> runCallable(ThreadPoolExecutor threadPoolExecutor, Callable<T> callable) {
-        return threadPoolExecutor.submit(callable);
+    public static <T> Future<T> runCallable(ExecutorService executorService, Callable<T> callable) {
+        return executorService.submit(callable);
     }
 
     public <T> T asyncGet(Executor executor, Supplier<T> supplier, int timeOut, TimeUnit timeUnit, T defaultValue) {
