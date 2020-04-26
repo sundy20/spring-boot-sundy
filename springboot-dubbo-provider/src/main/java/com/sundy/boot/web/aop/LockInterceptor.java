@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCommands;
 
 /**
@@ -22,6 +23,7 @@ import redis.clients.jedis.JedisCommands;
  * @date 2019-08-26
  */
 @Aspect
+@Component
 public class LockInterceptor extends ApplicationContextUtil {
     private static final Logger logger = LoggerFactory.getLogger(LockInterceptor.class);
     private static final String LOCK_SUCCESS = "OK";

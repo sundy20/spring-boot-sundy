@@ -18,6 +18,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019-08-26
  */
 @Aspect
+@Component
 public class CacheInterceptor extends ApplicationContextUtil {
     private static final Logger logger = LoggerFactory.getLogger(CacheInterceptor.class);
     private final ObjectMapper mapper;
