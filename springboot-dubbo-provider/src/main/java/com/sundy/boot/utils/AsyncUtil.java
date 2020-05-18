@@ -44,30 +44,24 @@ public class AsyncUtil {
         return new DefinedCompletableFuture<>(completableFuture);
     }
 
-    public static <T> Future<T> runCallable(ExecutorService executorService, Callable<T> callable) {
-        return executorService.submit(callable);
+    public static <T> Future<T> runAsync(ThreadPoolTaskExecutor threadPoolTaskExecutor, Supplier<T> supplier) {
+        return threadPoolTaskExecutor.submit(supplier::get);
     }
 
-    public <T> T asyncGet(Executor executor, Supplier<T> supplier, int timeOut, TimeUnit timeUnit, T defaultValue) {
-        DefinedCompletableFuture<T> definedCompletableFuture = AsyncUtil.runAsync(executor, supplier);
-        return definedCompletableFuture.get(timeOut, timeUnit, defaultValue);
+    public static <T> Future<T> runCallable(ExecutorService executorService, Callable<T> callable) {
+        return executorService.submit(callable);
     }
 
     public static <T> Future<T> runCallable(ThreadPoolTaskExecutor threadPoolTaskExecutor, Callable<T> callable) {
         return threadPoolTaskExecutor.submit(callable);
     }
 
-    public static <T> Future<T> runAsync(ThreadPoolTaskExecutor threadPoolTaskExecutor, Supplier<T> supplier) {
-        return threadPoolTaskExecutor.submit(supplier::get);
-    }
-
-    public <T> T asyncGet(ThreadPoolTaskExecutor threadPoolTaskExecutor, Supplier<T> supplier, int timeOut, TimeUnit timeUnit) {
-        Future<T> future = AsyncUtil.runAsync(threadPoolTaskExecutor, supplier);
+    public <T> T futureGet(Future<T> future, int timeOut, TimeUnit timeUnit, T defaultValue) {
         try {
             return future.get(timeOut, timeUnit);
         } catch (Exception e) {
-            log.error("asyncGet error ", e);
+            log.error("future.get error ", e);
         }
-        return null;
+        return defaultValue;
     }
 }
