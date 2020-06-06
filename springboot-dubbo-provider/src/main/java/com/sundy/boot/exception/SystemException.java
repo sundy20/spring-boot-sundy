@@ -5,7 +5,7 @@ package com.sundy.boot.exception;
  * @description 系统异常
  * @date 2019-09-17
  */
-public class SystemException extends RuntimeException {
+public class SystemException extends Exception {
 
     private String code;
 

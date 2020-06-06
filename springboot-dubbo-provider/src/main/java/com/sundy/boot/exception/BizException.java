@@ -6,7 +6,7 @@ package com.sundy.boot.exception;
  * @author plus.wang
  * @description 业务通用异常
  */
-public class BizException extends Exception {
+public class BizException extends RuntimeException {
 
     private String errorCode;
 

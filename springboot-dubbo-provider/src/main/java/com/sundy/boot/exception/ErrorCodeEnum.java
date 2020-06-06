@@ -11,6 +11,12 @@ public enum ErrorCodeEnum {
      * 系统异常
      */
     SYSTEM_ERROR("system_error", "系统异常"),
+
+    /**
+     * 业务异常
+     */
+    BIZ_ERROR("biz_error", "业务异常"),
+
     /**
      * 无法识别的业务类型
      */

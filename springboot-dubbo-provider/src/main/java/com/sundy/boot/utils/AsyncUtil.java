@@ -1,5 +1,7 @@
 package com.sundy.boot.utils;
 
+import com.sundy.boot.exception.BizException;
+import com.sundy.boot.exception.ErrorCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -67,5 +69,25 @@ public class AsyncUtil {
             log.error("future.get error ", e);
         }
         return defaultValue;
+    }
+
+    public static <T> T asyncGet(ThreadPoolTaskExecutor threadPoolTaskExecutor, Supplier<T> supplier, int defaultTimeOut, TimeUnit timeUnit) {
+        Future<T> future = asyncCall(threadPoolTaskExecutor, supplier);
+        try {
+            return future.get(defaultTimeOut, timeUnit);
+        } catch (Exception e) {
+            log.error("AsyncUtil ThreadPoolTaskExecutor asyncGet error ", e);
+            throw new BizException(ErrorCodeEnum.BIZ_ERROR);
+        }
+    }
+
+    public static <T> T asyncGet(ExecutorService executorService, Supplier<T> supplier, int defaultTimeOut, TimeUnit timeUnit) {
+        Future<T> future = asyncCall(executorService, supplier);
+        try {
+            return future.get(defaultTimeOut, timeUnit);
+        } catch (Exception e) {
+            log.error("AsyncUtil ExecutorService asyncGet error ", e);
+            throw new BizException(ErrorCodeEnum.BIZ_ERROR);
+        }
     }
 }
