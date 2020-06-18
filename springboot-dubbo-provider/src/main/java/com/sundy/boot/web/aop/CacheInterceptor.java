@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheInterceptor extends ApplicationContextUtil {
     private static final Logger logger = LoggerFactory.getLogger(CacheInterceptor.class);
     private final ObjectMapper mapper;
-    private volatile int flowControl = 20;
+    private volatile int flowControl = 100;
     private volatile int flowControlWait = 50;
     private volatile Semaphore flowSemaphore;
 
