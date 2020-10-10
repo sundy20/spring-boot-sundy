@@ -25,7 +25,7 @@ public class RedisLockComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisLockComponent.class);
     private static final String OK = "OK";
     private static final String NOT_EXIST = "NX";
-    private static final String MILLISECONDS = "PX";
+    private static final String EXPIRED = "PX";
 
     @Autowired
     @Qualifier("redisTemplate")
@@ -50,7 +50,7 @@ public class RedisLockComponent {
         lockFlag.set(uuid);
         String result = redisTemplate.execute((RedisCallback<String>) connection -> {
             JedisCommands jedisCommands = (JedisCommands) connection.getNativeConnection();
-            return jedisCommands.set(lockKey, uuid, NOT_EXIST, MILLISECONDS, 10000);
+            return jedisCommands.set(lockKey, uuid, NOT_EXIST, EXPIRED, milliseconds);
         });
         if (OK.equals(result)) {
             LOGGER.info("线程id:{},lockKey:{},lockValue:{} 加锁成功!时间:{}", Thread.currentThread().getId(), lockKey,
