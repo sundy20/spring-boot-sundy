@@ -3,12 +3,12 @@
  * <p>
  * Licensed under The MIT License (MIT)
  */
-package com.sundy.boot.biz.impl;
+package com.sundy.boot.bizManager.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sundy.boot.annotation.Cache;
-import com.sundy.boot.biz.FuturesSubscribeBiz;
+import com.sundy.boot.bizManager.FuturesSubscribeBiz;
 import com.sundy.boot.dao.FuturesSubscribeDao;
 import com.sundy.boot.domain.FuturesSubscribe;
 import org.springframework.beans.factory.annotation.Autowired;

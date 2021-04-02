@@ -1,4 +1,4 @@
-package com.sundy.boot.biz;
+package com.sundy.boot.bizManager;
 
 import com.sundy.boot.utils.ThreadPollUtil;
 import lombok.extern.slf4j.Slf4j;

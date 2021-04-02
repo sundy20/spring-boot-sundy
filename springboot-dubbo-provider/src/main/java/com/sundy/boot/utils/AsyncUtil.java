@@ -41,7 +41,7 @@ public class AsyncUtil {
         }
     }
 
-    public static <U> DefinedCompletableFuture<U> asyncCall(Executor executor, Supplier<U> supplier) {
+    public static <U> DefinedCompletableFuture<U> defineAsyncCall(Executor executor, Supplier<U> supplier) {
         CompletableFuture<U> completableFuture = CompletableFuture.supplyAsync(supplier, executor);
         return new DefinedCompletableFuture<>(completableFuture);
     }
@@ -54,15 +54,15 @@ public class AsyncUtil {
         return executorService.submit(supplier::get);
     }
 
-    public static <T> Future<T> asyncCall(ExecutorService executorService, Callable<T> callable) {
+    public static <T> Future<T> asyncCallableCall(ExecutorService executorService, Callable<T> callable) {
         return executorService.submit(callable);
     }
 
-    public static <T> Future<T> asyncCall(ThreadPoolTaskExecutor threadPoolTaskExecutor, Callable<T> callable) {
+    public static <T> Future<T> asyncCallableCall(ThreadPoolTaskExecutor threadPoolTaskExecutor, Callable<T> callable) {
         return threadPoolTaskExecutor.submit(callable);
     }
 
-    public <T> T futureGet(Future<T> future, int timeOut, TimeUnit timeUnit, T defaultValue) {
+    public static <T> T futureGet(Future<T> future, int timeOut, TimeUnit timeUnit, T defaultValue) {
         try {
             return future.get(timeOut, timeUnit);
         } catch (Exception e) {

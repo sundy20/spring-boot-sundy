@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 /**
  * @author plus.wang
  * @description spring线程池配置
@@ -44,5 +46,39 @@ public class ThreadPoolConfig {
     @Bean
     public LockInterceptor lockInterceptor() {
         return new LockInterceptor();
+    }
+
+    /**
+     * 资源位数据异步操作线程池
+     */
+    @Bean(value = "resGoodsExecutor")
+    public ThreadPoolTaskExecutor resGoodsExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        int threadCount = Runtime.getRuntime().availableProcessors() << 1;
+        executor.setCorePoolSize(threadCount);
+        executor.setMaxPoolSize(threadCount);
+        executor.setQueueCapacity(128);
+        executor.setThreadNamePrefix("resGoodsExecutor-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setAwaitTerminationSeconds(threadCount);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        return executor;
+    }
+
+    /**
+     * 货品数据异步操作线程池
+     */
+    @Bean(value = "goodsDataExecutor")
+    public ThreadPoolTaskExecutor goodsDataExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        int threadCount = Runtime.getRuntime().availableProcessors() << 1;
+        executor.setCorePoolSize(threadCount);
+        executor.setMaxPoolSize(threadCount);
+        executor.setQueueCapacity(256);
+        executor.setThreadNamePrefix("goodsDataExecutor-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setAwaitTerminationSeconds(threadCount);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        return executor;
     }
 }

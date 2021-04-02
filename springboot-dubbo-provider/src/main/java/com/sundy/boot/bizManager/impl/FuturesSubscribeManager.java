@@ -1,7 +1,7 @@
-package com.sundy.boot.biz.impl;
+package com.sundy.boot.bizManager.impl;
 
-import com.sundy.boot.biz.AbstractLocalCacheManager;
-import com.sundy.boot.biz.FuturesSubscribeBiz;
+import com.sundy.boot.bizManager.AbstractLocalCacheManager;
+import com.sundy.boot.bizManager.FuturesSubscribeBiz;
 import com.sundy.boot.domain.FuturesSubscribe;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

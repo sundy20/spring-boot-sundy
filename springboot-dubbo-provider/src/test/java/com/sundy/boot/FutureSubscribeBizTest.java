@@ -1,6 +1,6 @@
 package com.sundy.boot;
 
-import com.sundy.boot.biz.FuturesSubscribeBiz;
+import com.sundy.boot.bizManager.FuturesSubscribeBiz;
 import com.sundy.boot.domain.FuturesSubscribe;
 import org.junit.Test;
 import org.junit.runner.RunWith;

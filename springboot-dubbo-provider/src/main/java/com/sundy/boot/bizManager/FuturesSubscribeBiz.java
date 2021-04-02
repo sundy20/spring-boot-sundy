@@ -3,7 +3,7 @@
  * <p>
  * Licensed under The MIT License (MIT)
  */
-package com.sundy.boot.biz;
+package com.sundy.boot.bizManager;
 
 import com.github.pagehelper.PageInfo;
 import com.sundy.boot.domain.FuturesSubscribe;
