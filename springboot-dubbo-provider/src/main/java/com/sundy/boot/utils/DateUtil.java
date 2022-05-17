@@ -19,11 +19,11 @@ public class DateUtil {
     }
 
     public static Date string2Date(String datestr, DatePattern datePattern) {
-        ZoneId zone = ZoneId.systemDefault();
-        LocalDateTime localDateTime = LocalDateTime.parse(datestr,
-                DateTimeFormatter.ofPattern(datePattern.getPattern()));
-        Instant instant = localDateTime.atZone(zone).toInstant();
-        return Date.from(instant);
+        return string2Date(datestr, datePattern.getPattern());
+    }
+
+    public static LocalDate string2LocalDate(String datestr, String format) {
+        return LocalDate.parse(datestr, DateTimeFormatter.ofPattern(format));
     }
 
     public static String date2string(Date date, String format) {
@@ -105,7 +105,6 @@ public class DateUtil {
     }
 
     public static String localDate2string(LocalDate localDate, DatePattern datePattern) {
-
         return localDate.format(DateTimeFormatter.ofPattern(datePattern.getPattern()));
     }
 }
