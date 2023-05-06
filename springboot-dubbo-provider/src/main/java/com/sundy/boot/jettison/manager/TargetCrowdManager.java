@@ -1,9 +1,9 @@
 package com.sundy.boot.jettison.manager;
 
 import com.google.common.collect.Lists;
-import com.sundy.boot.jettison.query.UserParam;
-import com.sundy.boot.jettison.config.ShelfConfigDTO;
 import com.sundy.boot.jettison.config.ResConfigDTO;
+import com.sundy.boot.jettison.config.ShelfConfigDTO;
+import com.sundy.share.flowApi.UserParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

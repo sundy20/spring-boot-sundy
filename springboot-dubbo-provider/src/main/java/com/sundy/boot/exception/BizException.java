@@ -15,6 +15,10 @@ public class BizException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    public BizException(String errorMessage) {
+        super(errorMessage);
+    }
+
     public BizException(ErrorCodeEnum errorCodeEnum) {
         this(errorCodeEnum.getCode(), errorCodeEnum.getMsg());
     }

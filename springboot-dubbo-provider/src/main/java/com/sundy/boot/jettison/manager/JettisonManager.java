@@ -3,9 +3,10 @@ package com.sundy.boot.jettison.manager;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.sundy.boot.freq.FreqManager;
 import com.sundy.boot.jettison.bo.*;
 import com.sundy.boot.jettison.config.GoodsConfigDTO;
 import com.sundy.boot.jettison.config.ResConfigDTO;
@@ -16,10 +17,16 @@ import com.sundy.boot.jettison.dto.DataItemDTO;
 import com.sundy.boot.jettison.dto.GoodsTradeDTO;
 import com.sundy.boot.jettison.dto.ResGoodsDTO;
 import com.sundy.boot.jettison.enums.ResTypeEnum;
-import com.sundy.boot.jettison.recall.RecallHandlerFactory;
-import com.sundy.boot.jettison.query.*;
 import com.sundy.boot.jettison.goods.GoodsHandlerFactory;
+import com.sundy.boot.jettison.query.GoodsTradeParam;
+import com.sundy.boot.jettison.query.GoodsTradeQuery;
+import com.sundy.boot.jettison.query.ResParam;
+import com.sundy.boot.jettison.query.ResQuery;
+import com.sundy.boot.jettison.recall.RecallHandlerFactory;
 import com.sundy.boot.utils.AsyncUtil;
+import com.sundy.share.dto.Result;
+import com.sundy.share.flowApi.FreqQuery;
+import com.sundy.share.flowApi.UserParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -395,10 +402,15 @@ public class JettisonManager {
         //资源位频次check
         List<Map<String, Object>> mapList = resConfigDTO.getFreqKeys();
         if (!CollectionUtils.isEmpty(mapList)) {
-            Set<String> freqKeys = Sets.newHashSet();
+            List<String> freqKeys = Lists.newArrayList();
             mapList.forEach(map -> freqKeys.add(map.get(GoodsConstant.FREQ_KEY).toString()));
-            boolean checkFreq = freqManager.checkFreq(userParam.getUserId(), freqKeys);
-            if (!checkFreq) {
+            FreqQuery freqQuery = new FreqQuery();
+            freqQuery.setBizKeys(freqKeys);
+            freqQuery.setBizIds(Lists.newArrayList(userParam.getUserId().toString()));
+            Result<JSONObject> checkFreq = freqManager.availFreq(freqQuery);
+            Boolean ok = JSONObject.parseObject(checkFreq.getData().getString("OK"), new TypeReference<Boolean>() {
+            });
+            if (!ok) {
                 goodsTradeDTO.setTradeMessage(mapList.get(0).get(GoodsConstant.FREQ_TEXT).toString());
                 return null;
             }
@@ -441,9 +453,14 @@ public class JettisonManager {
     private boolean addFreq(Long userId, ResConfigDTO resConfigDTO) {
         List<Map<String, Object>> mapList = resConfigDTO.getFreqKeys();
         if (!CollectionUtils.isEmpty(mapList)) {
-            Set<String> freqKeys = Sets.newHashSet();
+            List<String> freqKeys = Lists.newArrayList();
+            FreqQuery freqQuery = new FreqQuery();
+            freqQuery.setBizKeys(freqKeys);
+            freqQuery.setBizIds(Lists.newArrayList(userId.toString()));
             mapList.forEach(map -> freqKeys.add(map.get(GoodsConstant.FREQ_KEY).toString()));
-            return freqManager.addFreq(userId, freqKeys);
+            Result<JSONObject> addFreq = freqManager.addFreq(freqQuery);
+            return JSONObject.parseObject(addFreq.getData().getString("OK"), new TypeReference<Boolean>() {
+            });
         } else {
             return Boolean.TRUE;
         }
@@ -452,9 +469,14 @@ public class JettisonManager {
     private boolean reduceFreq(Long userId, ResConfigDTO resConfigDTO) {
         List<Map<String, Object>> mapList = resConfigDTO.getFreqKeys();
         if (!CollectionUtils.isEmpty(mapList)) {
-            Set<String> freqKeys = Sets.newHashSet();
+            List<String> freqKeys = Lists.newArrayList();
+            FreqQuery freqQuery = new FreqQuery();
+            freqQuery.setBizKeys(freqKeys);
+            freqQuery.setBizIds(Lists.newArrayList(userId.toString()));
             mapList.forEach(map -> freqKeys.add(map.get(GoodsConstant.FREQ_KEY).toString()));
-            return freqManager.reduceFreq(userId, freqKeys);
+            Result<JSONObject> reduceFreq = freqManager.reduceFreq(freqQuery);
+            return JSONObject.parseObject(reduceFreq.getData().getString("OK"), new TypeReference<Boolean>() {
+            });
         } else {
             return Boolean.TRUE;
         }

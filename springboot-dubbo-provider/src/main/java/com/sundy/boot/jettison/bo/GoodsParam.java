@@ -1,7 +1,7 @@
 package com.sundy.boot.jettison.bo;
 
-import com.sundy.boot.jettison.query.UserParam;
 import com.sundy.boot.jettison.config.GoodsConfigDTO;
+import com.sundy.share.flowApi.UserParam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.sundy.boot.jettison.check;
 
-import com.sundy.boot.jettison.manager.FreqManager;
+import com.sundy.boot.freq.FreqManager;
 import com.sundy.boot.jettison.query.GoodsTradeQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

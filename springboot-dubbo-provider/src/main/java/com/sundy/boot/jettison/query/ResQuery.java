@@ -1,5 +1,6 @@
 package com.sundy.boot.jettison.query;
 
+import com.sundy.share.flowApi.UserParam;
 import lombok.Data;
 
 import java.util.List;
