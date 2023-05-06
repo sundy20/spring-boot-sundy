@@ -114,12 +114,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
-        </dependency>
-
         <!-- nettywebsocket -->
         <dependency>
             <groupId>com.corundumstudio.socketio</groupId>
@@ -148,7 +142,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.0</version>
+            <version>31.1-jre</version>
         </dependency>
 
         <dependency>
@@ -163,11 +157,6 @@
             <version>1.2.4.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
