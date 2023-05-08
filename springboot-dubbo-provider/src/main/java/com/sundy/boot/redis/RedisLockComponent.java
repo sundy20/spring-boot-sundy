@@ -12,6 +12,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisCommands;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -45,17 +46,22 @@ public class RedisLockComponent {
     }
 
     public boolean lock(String lockKey, int milliseconds) {
-        LOGGER.info("RedisLockComponent_lock lockKey:{} milliseconds:{}", lockKey, milliseconds);
-        String uuid = UUID.randomUUID().toString() + Thread.currentThread().getId();
-        lockFlag.set(uuid);
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            JedisCommands jedisCommands = (JedisCommands) connection.getNativeConnection();
-            return jedisCommands.set(lockKey, uuid, NOT_EXIST, EXPIRED, milliseconds);
-        });
-        if (OK.equals(result)) {
-            LOGGER.info("线程id:{},lockKey:{},lockValue:{} 加锁成功!时间:{}", Thread.currentThread().getId(), lockKey,
-                    uuid, LocalTime.now());
-            return true;
+        try {
+            String uuid = UUID.randomUUID().toString() + Thread.currentThread().getId();
+            lockFlag.set(uuid);
+            String result = redisTemplate.execute((RedisCallback<String>) connection -> {
+                JedisCommands jedisCommands = (JedisCommands) connection.getNativeConnection();
+                return jedisCommands.set(lockKey, uuid, NOT_EXIST, EXPIRED, milliseconds);
+            });
+            if (OK.equals(result)) {
+                LOGGER.info("[RedisLockComponent.lock] 线程id:{},lockKey:{},lockValue:{},加锁成功!时间:{},milliseconds={}", Thread.currentThread().getId(), lockKey, uuid, LocalTime.now(), milliseconds);
+                return true;
+            } else {
+                LOGGER.info("[RedisLockComponent.lock] 线程id={},lockKey={},lockValue={},加锁失败!时间={},milliseconds={}", Thread.currentThread().getId(), lockKey, uuid, LocalDateTime.now(), milliseconds);
+                return false;
+            }
+        } catch (Exception e) {
+            LOGGER.error("[RedisLockComponent.lock] lockKey={} error ", lockKey, e);
         }
         return false;
     }
@@ -81,7 +87,7 @@ public class RedisLockComponent {
             });
             return result != null && result > 0;
         } catch (Exception e) {
-            LOGGER.error("RedisLockComponent_unlock lockKey:{},lockValue:{} error ", lockKey, lockFlag.get(), e);
+            LOGGER.error("[RedisLockComponent.unlock] lockKey:{},lockValue:{} error ", lockKey, lockFlag.get(), e);
         }
         return false;
     }
