@@ -42,24 +42,12 @@ public class SocketIOJavaClientTest {
 
             socket.disconnect();
 
-        }).on(Socket.EVENT_CONNECT_TIMEOUT, args -> {
+        }).on(Socket.EVENT_DISCONNECT, args -> {
 
             logger.info("Socket.EVENT_CONNECT_TIMEOUT");
 
             socket.disconnect();
 
-        }).on(Socket.EVENT_DISCONNECT, args12 -> {
-
-            logger.info("Socket.EVENT_DISCONNECT");
-
-            socket.disconnect();
-
-        }).on(Socket.EVENT_MESSAGE, ackMessageArray -> {
-
-            for (Object obj : ackMessageArray) {
-
-                System.out.println(obj);
-            }
         });
 
         socket.connect();
