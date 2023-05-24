@@ -11,7 +11,7 @@ kafka 集成
 
 mongodb 集群
 
-redis 集群
+redis 集群/lock
 
 自定义注解实现http防重
 
