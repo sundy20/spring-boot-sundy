@@ -10,7 +10,7 @@ hostname修改
 sudo scutil --set HostName [NewHostName]
 关闭终端应用程序并重新启动你的 Mac，这样更改才能生效
 
-iTerm2安装配置使用指南https://zhuanlan.zhihu.com/p/550022490
+iTerm2安装配置使用指南 https://zhuanlan.zhihu.com/p/550022490
 oh my zsh安装、zsh插件 git zsh-syntax-highlighting zsh-autosuggestions
 显示当前文件夹
 PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%d%{$reset_color%}"
