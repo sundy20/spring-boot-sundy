@@ -10,11 +10,11 @@ hostname修改
 sudo scutil --set HostName [NewHostName]
 关闭终端应用程序并重新启动你的 Mac，这样更改才能生效
 
+homebrew安装
 iTerm2安装配置使用指南 https://zhuanlan.zhihu.com/p/550022490
 oh my zsh安装、zsh插件 git zsh-syntax-highlighting zsh-autosuggestions
 显示当前文件夹
 PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%d%{$reset_color%}"
-PROMPT+=' $(git_prompt_info)'
 
 ###### jdk8安装、maven安装：
 
@@ -31,5 +31,5 @@ export PATH=$PATH:$MAVEN_HOME/bin
 ###### 软件安装：
 
 谷歌、搜狗输入法、OmniGraffle、sublime、The Unarchiver、XMind8、StarUML、idea、XMind8、网易云音乐
-TeamFile备份文件夹下载
+
 IDEA 2022.3.2 最优开发配置https://www.cnblogs.com/pkukhq/p/17172214.html
