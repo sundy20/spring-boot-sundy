@@ -12,6 +12,7 @@ sudo scutil --set HostName [NewHostName]
 
 homebrew安装
 iTerm2安装配置使用指南 https://zhuanlan.zhihu.com/p/550022490
+
 oh my zsh安装、zsh插件 git zsh-syntax-highlighting zsh-autosuggestions
 显示当前文件夹
 PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%d%{$reset_color%}"
