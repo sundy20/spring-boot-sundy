@@ -271,6 +271,9 @@ public class JettisonManager {
             recallParam.setLimit(resQuery.getLimit());
         }
         recallParam.setUserParam(userParam);
+
+        //TODO 召回前置处理 策略工厂模式
+
         RecallBO recallBO = recallHandlerFactory.getHandler(recallParam.getRecallCode()).handleRecall(recallParam);
         GoodsParam goodsParam = GoodsParam.builder().build();
         goodsParam.setGoodsType(goodsType);
@@ -306,10 +309,14 @@ public class JettisonManager {
                 dataItemDTO.setGoodsInst(goodsType + GoodsConstant.GOODS_INST_SPLIT + goodsCode + GoodsConstant.GOODS_INST_SPLIT + stringObjectMap.get(GoodsConstant.GOODS_KEY));
                 dataItemDTO.setGoodsType(goodsType);
                 dataItemDTO.setGoodsCode(goodsCode);
-                //补全服务决定补全哪些字段 recallBo TODO
+                //TODO 补全服务决定补全哪些字段 recallBo 补全策略工厂 fill
+
                 dataItemDTO.setAttribute(stringObjectMap);
                 data.add(dataItemDTO);
             });
+
+            //TODO 召回补全后置处理 策略工厂模式
+
             return data;
         }
         return Collections.emptyList();

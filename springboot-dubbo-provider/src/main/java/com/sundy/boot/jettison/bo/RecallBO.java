@@ -33,7 +33,7 @@ public class RecallBO extends BaseBO {
     private String nextPageId = "";
 
     /**
-     * 召回的key
+     * 召回的key列表
      */
     private List<String> recallIds;
 
