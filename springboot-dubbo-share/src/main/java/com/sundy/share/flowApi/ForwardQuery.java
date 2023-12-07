@@ -21,7 +21,7 @@ public class ForwardQuery extends BaseQuery {
     private String flowCode;
 
     /**
-     * ele用户信息
+     * 用户信息
      */
     private UserParam userParam;
 
