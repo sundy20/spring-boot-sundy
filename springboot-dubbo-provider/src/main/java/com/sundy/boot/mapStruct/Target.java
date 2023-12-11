@@ -9,4 +9,5 @@ public class Target {
     private Long id;
     private Long age;
     private String userNick;
+    private String weight;
 }

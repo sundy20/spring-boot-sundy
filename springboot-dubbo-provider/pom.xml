@@ -23,6 +23,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <protostuff.version>1.5.9</protostuff.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     </properties>
 
     <dependencies>
@@ -298,13 +300,9 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.2.Final</version>
+            <version>${mapstruct.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.2.Final</version>
-        </dependency>
+
     </dependencies>
 
     <repositories>
@@ -333,6 +331,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <!-- use the Java 8 language features -->
                     <source>${java.version}</source>
@@ -342,6 +341,27 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <verbose>true</verbose>
                     <compilerArgument>-parameters</compilerArgument>
+
+                    <annotationProcessorPaths>
+                        <!-- MapStruct 注解处理器 -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- Lombok 注解处理器 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <!-- MapStruct 和 Lombok 注解绑定处理器 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok-mapstruct-binding.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 

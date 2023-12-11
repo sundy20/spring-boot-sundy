@@ -1,21 +1,21 @@
 package com.sundy.boot;
 
-import com.sundy.boot.mapStruct.BeanConverter;
+import com.sundy.boot.mapStruct.BeanConvertMapper;
+import com.sundy.boot.mapStruct.BeanConvertMapperSpring;
 import com.sundy.boot.mapStruct.Source;
 import com.sundy.boot.mapStruct.Target;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SpringBootSundyApplication.class)
 public class SpringBootSundyApplicationTests {
 
-    @Resource
-    private BeanConverter beanConverter;
+    @Autowired
+    private BeanConvertMapperSpring beanConvertMapperSpring;
 
     @Test
     public void contextLoads() {
@@ -29,7 +29,11 @@ public class SpringBootSundyApplicationTests {
                 .age(18L)
                 .userNick("nick")
                 .build();
-        final Target result = beanConverter.convert(source);
-        System.out.println(result);
+
+        Target target = BeanConvertMapper.INSTANCE.source2target(source);
+        System.out.println(target);
+
+        Target target1 = beanConvertMapperSpring.source2target(source);
+        System.out.println(target1);
     }
 }

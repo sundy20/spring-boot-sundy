@@ -9,4 +9,5 @@ public class Source {
     private Long id;
     private Long age;
     private String userNick;
+    private String weightStr;
 }
