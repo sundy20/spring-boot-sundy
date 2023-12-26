@@ -3,74 +3,64 @@ package com.sundy.share.dto;
 import com.sundy.share.enums.ResultCode;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author plus.wang
  * @description 通用响应对象
- * @date 2018/11/11
  */
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 9131899105712058126L;
 
-    private String message;
+    private boolean success;
 
-    private String code;
+    private String msgCode;
+
+    private String msgInfo;
 
     private T data;
+
+    private Map<String, Object> bizExtMap;
 
     private Result() {
 
     }
 
     public static <T> Result<T> success(T data) {
-
-        return new Result<T>().code(ResultCode.SUCCESS.getCode()).data(data).message(ResultCode.SUCCESS.getMessage());
+        return new Result<T>().success(true).code(ResultCode.SUCCESS.getCode()).data(data).message(ResultCode.SUCCESS.getMessage());
     }
 
     public static <T> Result<T> success(String code, String message) {
-
-        return new Result<T>().code(code).message(message);
-    }
-
-    public Result<T> successfully(T data) {
-
-        return this.code(ResultCode.SUCCESS.getCode()).message(ResultCode.SUCCESS.getMessage()).data(data);
+        return new Result<T>().success(true).code(code).message(message);
     }
 
     public static <T> Result<T> failure() {
-
-        return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(ResultCode.SERVER_ERROR.getMessage());
+        return new Result<T>().success(false).code(ResultCode.SERVER_ERROR.getCode()).message(ResultCode.SERVER_ERROR.getMessage());
     }
 
     public static <T> Result<T> failure(String message) {
-
-        return new Result<T>().code(ResultCode.SERVER_ERROR.getCode()).message(message);
+        return new Result<T>().success(false).code(ResultCode.SERVER_ERROR.getCode()).message(message);
     }
 
     public static <T> Result<T> failure(String code, String message) {
-
-        return new Result<T>().code(code).message(message);
+        return new Result<T>().success(false).code(code).message(message);
     }
 
     public static <T> Result<T> clientFailure() {
-
-        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
+        return new Result<T>().success(false).code(ResultCode.CLIENT_ERROR.getCode()).message(ResultCode.CLIENT_ERROR.getMessage());
     }
 
     public static <T> Result<T> clientFailure(String message) {
-
-        return new Result<T>().code(ResultCode.CLIENT_ERROR.getCode()).message(message);
+        return new Result<T>().success(false).code(ResultCode.CLIENT_ERROR.getCode()).message(message);
     }
 
     public static <T> Result<T> clientFailure(String code, String message) {
-
-        return new Result<T>().code(code).message(message);
+        return new Result<T>().success(false).code(code).message(message);
     }
 
     public boolean isSucceed() {
-
-        return this.code.equals(ResultCode.SUCCESS.getCode());
+        return success;
     }
 
     public T getData() {
@@ -78,31 +68,38 @@ public class Result<T> implements Serializable {
     }
 
     public Result<T> data(T data) {
-
         this.data = data;
-
         return this;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsgInfo() {
+        return msgInfo;
     }
 
     public Result<T> message(String message) {
-
-        this.message = message;
-
+        this.msgInfo = message;
         return this;
     }
 
-    public String getCode() {
-        return code;
+    public String getMsgCode() {
+        return msgCode;
     }
 
     public Result<T> code(String code) {
-
-        this.code = code;
-
+        this.msgCode = code;
         return this;
+    }
+
+    public Result<T> success(boolean success) {
+        this.success = success;
+        return this;
+    }
+
+    public Map<String, Object> getBizExtMap() {
+        return bizExtMap;
+    }
+
+    public void setBizExtMap(Map<String, Object> bizExtMap) {
+        this.bizExtMap = bizExtMap;
     }
 }

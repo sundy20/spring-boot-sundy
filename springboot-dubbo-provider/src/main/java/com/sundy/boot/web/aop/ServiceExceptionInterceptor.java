@@ -33,8 +33,8 @@ public class ServiceExceptionInterceptor {
             Object returnObject = returnType.newInstance();
             if (returnObject instanceof Result) {
                 Result result = Result.failure(e.getMessage());
-                log.info("[{}:{}] return error code {}, msg {}", clazzName, methodName, result.getCode(),
-                        result.getMessage());
+                log.info("[{}:{}] return error code {}, msg {}", clazzName, methodName, result.getMsgCode(),
+                        result.getMsgInfo());
                 return returnObject;
             } else {
                 log.error("exception not expected", e);

@@ -116,7 +116,7 @@ public class TestGoodsHandler implements GoodsHandler {
                                 goodsTradeBO.setStatus(true);
                                 goodsTradeBO.setMessage(GoodsConstant.EMPTY_STR);
                             } else {
-                                goodsTradeBO.setMessage(tradeResult.getMessage());
+                                goodsTradeBO.setMessage(tradeResult.getMsgInfo());
                             }
                         }
                     }
