@@ -136,7 +136,7 @@ CREATE TABLE `jettison_strategy_supply` (
                                             KEY `idx_loc_id` (`loc_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = 'jettison策略-供给关系表';
 
-CREATE TABLE `freq_item` (
+CREATE TABLE `jettison_freq_item` (
                              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
                              `gmt_create` datetime NOT NULL COMMENT '创建时间',
                              `gmt_modified` datetime NOT NULL COMMENT '修改时间',
