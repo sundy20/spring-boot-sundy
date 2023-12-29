@@ -3,7 +3,9 @@ package com.sundy.share.flowApi;
 import java.util.List;
 
 public class FreqQuery extends BaseQuery {
+
     private List<String> bizIds;
+
     private List<String> bizKeys;
 
     /**

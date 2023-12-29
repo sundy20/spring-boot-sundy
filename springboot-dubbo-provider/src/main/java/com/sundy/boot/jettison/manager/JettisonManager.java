@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sundy.boot.freq.FreqManager;
+import com.sundy.boot.inventory.repository.FreqRepository;
 import com.sundy.boot.jettison.bo.*;
 import com.sundy.boot.jettison.config.GoodsConfigDTO;
 import com.sundy.boot.jettison.config.ResConfigDTO;
@@ -70,7 +70,7 @@ public class JettisonManager {
     private TargetCrowdManager targetCrowdManager;
 
     @Autowired
-    private FreqManager freqManager;
+    private FreqRepository freqRepository;
 
     /**
      * 货品查询
@@ -414,7 +414,7 @@ public class JettisonManager {
             FreqQuery freqQuery = new FreqQuery();
             freqQuery.setBizKeys(freqKeys);
             freqQuery.setBizIds(Lists.newArrayList(userParam.getUserId().toString()));
-            Result<JSONObject> checkFreq = freqManager.availFreq(freqQuery);
+            Result<JSONObject> checkFreq = freqRepository.availFreq(freqQuery);
             Boolean ok = JSONObject.parseObject(checkFreq.getData().getString("OK"), new TypeReference<Boolean>() {
             });
             if (!ok) {
@@ -465,7 +465,7 @@ public class JettisonManager {
             freqQuery.setBizKeys(freqKeys);
             freqQuery.setBizIds(Lists.newArrayList(userId.toString()));
             mapList.forEach(map -> freqKeys.add(map.get(GoodsConstant.FREQ_KEY).toString()));
-            Result<JSONObject> addFreq = freqManager.addFreq(freqQuery);
+            Result<JSONObject> addFreq = freqRepository.addFreq(freqQuery);
             return JSONObject.parseObject(addFreq.getData().getString("OK"), new TypeReference<Boolean>() {
             });
         } else {
@@ -481,7 +481,7 @@ public class JettisonManager {
             freqQuery.setBizKeys(freqKeys);
             freqQuery.setBizIds(Lists.newArrayList(userId.toString()));
             mapList.forEach(map -> freqKeys.add(map.get(GoodsConstant.FREQ_KEY).toString()));
-            Result<JSONObject> reduceFreq = freqManager.reduceFreq(freqQuery);
+            Result<JSONObject> reduceFreq = freqRepository.reduceFreq(freqQuery);
             return JSONObject.parseObject(reduceFreq.getData().getString("OK"), new TypeReference<Boolean>() {
             });
         } else {
