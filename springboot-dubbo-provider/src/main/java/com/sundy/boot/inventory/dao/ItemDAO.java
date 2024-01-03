@@ -20,14 +20,14 @@ public class ItemDAO {
     @Resource
     private ItemIService itemIService;
 
-    public ItemDO add(ItemDO freqItemDO) {
+    public ItemDO add(ItemDO itemDO) {
         try {
-            if (freqItemDO.getNid() == null) {
+            if (itemDO.getNid() == null) {
                 //Long nid = sequence.nextValue();
-                //freqItemDO.setNid(nid);
+                //itemDO.setNid(nid);
             }
-            if (itemIService.save(freqItemDO)) {
-                return freqItemDO;
+            if (itemIService.save(itemDO)) {
+                return itemDO;
             } else {
                 return null;
             }
@@ -36,19 +36,19 @@ public class ItemDAO {
         }
     }
 
-    public boolean update(ItemDO freqItemDO) {
+    public boolean update(ItemDO itemDO) {
         try {
             QueryWrapper<ItemDO> q = new QueryWrapper<>();
-            q.eq("nid", freqItemDO.getNid());
+            q.eq("nid", itemDO.getNid());
             q.last(" LIMIT 1");
             ItemDO one = itemIService.getOne(q);
             boolean ret;
             if (one == null) {
-                ret = add(freqItemDO) != null;
+                ret = add(itemDO) != null;
             } else {
                 QueryWrapper<ItemDO> qm = new QueryWrapper<>();
-                qm.eq("nid", freqItemDO.getNid());
-                ret = itemIService.update(freqItemDO, qm);
+                qm.eq("nid", itemDO.getNid());
+                ret = itemIService.update(itemDO, qm);
             }
             return ret;
         } catch (Exception e) {

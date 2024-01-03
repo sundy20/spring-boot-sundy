@@ -49,7 +49,7 @@ public class FreqRepository {
     @Autowired
     private ThreadPoolTaskExecutor executor;
 
-    public JSONObject availFreqByKey(FreqQuery query, Long cur, List<Freq> freqBoList, String bizKey, FreqContext context) {
+    public JSONObject availFreqByKey(FreqQuery query, Long cur, List<Freq> freqList, String bizKey, FreqContext context) {
         FreqRecorder recorder = new FreqRecorder();
         recorder.setAction("availFreq").setBizIds(query.getBizIds().toString()).setBizCode(bizKey);
 
@@ -59,14 +59,14 @@ public class FreqRepository {
         boolean dump = Optional.ofNullable(query.getExtra()).map(e -> e.containsKey("dump")).orElse(false);
         try {
             FreqBuilder freqInfoBuilder = new FreqBuilder(cur);
-            for (Freq freqBO : freqBoList) {
-                List<Item> itemBoList = freqBO.getItemList();
-                for (Item itemBO : itemBoList) {
-                    if (!"stock".equals(itemBO.getType())) {
+            for (Freq freq : freqList) {
+                List<Item> itemList = freq.getItemList();
+                for (Item item : itemList) {
+                    if (!"stock".equals(item.getType())) {
                         continue;
                     }
 
-                    JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(itemBO, query.getBizIds().get(0), freqBO.getRate().getKey());
+                    JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(item, query.getBizIds().get(0), freq.getRate().getKey());
                     String cnt = jedisCluster.get(freqInfo.getString("key"));
 
                     if (dump) {
@@ -79,21 +79,21 @@ public class FreqRepository {
                     }
                     Long remain = Optional.ofNullable(cnt)
                             .map(Long::valueOf)
-                            .map(e -> itemBO.getAmount() - e)
-                            .orElse(itemBO.getAmount());
-                    recorder.setStep(remain.toString()).setItemBO(itemBO).record();
+                            .map(e -> item.getAmount() - e)
+                            .orElse(item.getAmount());
+                    recorder.setStep(remain.toString()).setItem(item).record();
 
-                    if (cnt != null && Integer.parseInt(cnt) + freqBO.getRate().getCnt() > itemBO.getAmount()) {
+                    if (cnt != null && Integer.parseInt(cnt) + freq.getRate().getCnt() > item.getAmount()) {
                         ret.put("fc", true);
                         ret.put("isStockFcKey", true);
-                        ret.put("stockFcData", JSON.toJSON(itemBO));
+                        ret.put("stockFcData", JSON.toJSON(item));
                         return ret;
                     }
 
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("bizKey", bizKey);
                     jsonObject.put("overCnt", remain);
-                    jsonObject.put("oriStock", itemBO.getAmount());
+                    jsonObject.put("oriStock", item.getAmount());
                     context.saveStockPassResult(jsonObject);
                 }
             }
@@ -164,18 +164,18 @@ public class FreqRepository {
         for (Map.Entry<String, Future<List<Freq>>> entry : map.entrySet()) {
             String bizKey = entry.getKey();
             Future<List<Freq>> listFuture = entry.getValue();
-            List<Freq> freqBoList = AsyncUtil.futureGet(listFuture, Constants.FREQ_ASYNC_MS, TimeUnit.MILLISECONDS, null);
-            if (Objects.isNull(freqBoList)) {
+            List<Freq> freqList = AsyncUtil.futureGet(listFuture, Constants.FREQ_ASYNC_MS, TimeUnit.MILLISECONDS, null);
+            if (Objects.isNull(freqList)) {
                 throw new BizException(String.format("bizKey：%s库存频次redis获取超时", bizKey));
             }
-            if (CollectionUtils.isEmpty(freqBoList)) {
+            if (CollectionUtils.isEmpty(freqList)) {
                 context.saveEmptyConfigKey(bizKey);
                 continue;
             }
             boolean haveStock = false;
-            for (Freq freqBO : freqBoList) {
+            for (Freq freq : freqList) {
                 for (User u : users) {
-                    User.AvailResult availResult = u.avail(freqBO, "freq");
+                    User.AvailResult availResult = u.avail(freq, "freq");
                     if (!availResult.isAvail()) {
                         context.saveFreqFcKey(bizKey);
                         context.saveFcBizId(u.getId());
@@ -190,16 +190,16 @@ public class FreqRepository {
                         context.saveRreqPassResult(jsonObject);
                     }
                 }
-                List<Item> itemBoList = freqBO.getItemList();
-                for (Item itemBO : itemBoList) {
-                    if ("stock".equals(itemBO.getType())) {
+                List<Item> itemList = freq.getItemList();
+                for (Item item : itemList) {
+                    if ("stock".equals(item.getType())) {
                         haveStock = true;
                         break;
                     }
                 }
             }
             if (haveStock) {
-                ayncResults.add(AsyncUtil.asyncCall(executor, () -> availFreqByKey(query, cur, freqBoList, bizKey, context)));
+                ayncResults.add(AsyncUtil.asyncCall(executor, () -> availFreqByKey(query, cur, freqList, bizKey, context)));
             }
         }
 
@@ -248,15 +248,15 @@ public class FreqRepository {
             List<User> users = fetchUsers(cur, bizId, freqQuery.getBizIds(), context);
             FreqBuilder freqInfoBuilder = new FreqBuilder(cur);
             for (String bizKey : freqQuery.getBizKeys()) {
-                List<Freq> freqBoList = this.freqDAO.getFreqs(context, bizKey);
+                List<Freq> freqList = this.freqDAO.getFreqs(context, bizKey);
                 context.getRecorder().setBizCode(bizKey);
-                if (CollectionUtils.isEmpty(freqBoList)) {
+                if (CollectionUtils.isEmpty(freqList)) {
                     context.saveEmptyConfigKey(bizKey);
                     continue;
                 }
 
                 boolean fc = false;
-                for (Freq freqBO : freqBoList) {
+                for (Freq freqBO : freqList) {
                     for (User user : users) {
                         User.AvailResult availResult = user.avail(freqBO, "freq");
                         if (!availResult.isAvail()) {
@@ -273,25 +273,25 @@ public class FreqRepository {
                 }
 
                 if (!fc) {
-                    for (Freq freqBO : freqBoList) {
-                        List<Item> itemBoList = freqBO.getItemList();
-                        String rateKey = freqBO.getRate().getKey();
-                        for (Item itemBO : itemBoList) {
+                    for (Freq freq : freqList) {
+                        List<Item> itemList = freq.getItemList();
+                        String rateKey = freq.getRate().getKey();
+                        for (Item itemBO : itemList) {
                             if ("stock".equals(itemBO.getType())) {
                                 JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(itemBO, bizId, rateKey);
 
                                 int ret = ((Long) jedisCluster.eval(FreqLuaScript.INCRBY,
                                         Collections.singletonList(freqInfo.getString("key")),
-                                        Arrays.asList(freqBO.getRate().getCnt().toString(),
+                                        Arrays.asList(freq.getRate().getCnt().toString(),
                                                 itemBO.getAmount().toString(),
                                                 calcSeconds(cur, freqInfo.getLong("endTime")).toString()))).intValue();
                                 if (ret == 0) {
                                     fc = true;
-                                    context.getRecorder().setBizIds(bizId).setStep("stockOverrun").setItemBO(itemBO).record();
+                                    context.getRecorder().setBizIds(bizId).setStep("stockOverrun").setItem(itemBO).record();
                                     context.save(bizKey, fc);
                                     throw new StockLimitException("stock limit, freqQuery:" + freqQuery);
                                 } else {
-                                    context.getRecorder().setBizIds(bizId).setStep("stockIncr").setItemBO(itemBO).record();
+                                    context.getRecorder().setBizIds(bizId).setStep("stockIncr").setItem(itemBO).record();
                                 }
                             }
                         }
@@ -299,9 +299,9 @@ public class FreqRepository {
                 }
 
                 if (!fc) {
-                    for (Freq freqBO : freqBoList) {
+                    for (Freq freq : freqList) {
                         for (User user : users) {
-                            user.add(freqBO);
+                            user.add(freq);
                         }
                     }
                 }
@@ -310,8 +310,9 @@ public class FreqRepository {
             }
 
             for (User user : users) {
-                //TODO key ttl 设置
-                jedisCluster.set(Constants.FREQ_PREFIX + user.getId(), user.dump());
+                //key ttl 设置
+                log.info("freqAdd bizId:{}, value:{}", user.getId(), user.dump());
+                freqOperate(user);
             }
         } catch (StockLimitException e) {
             log.error("stock limit, freqQuery:{}", freqQuery);
@@ -344,49 +345,50 @@ public class FreqRepository {
 
             for (String bizKey : freqQuery.getBizKeys()) {
                 context.getRecorder().setBizCode(bizKey);
-                List<Freq> freqBoList = this.freqDAO.getFreqs(context, bizKey);
-                if (CollectionUtils.isEmpty(freqBoList)) {
+                List<Freq> freqList = this.freqDAO.getFreqs(context, bizKey);
+                if (CollectionUtils.isEmpty(freqList)) {
                     context.saveEmptyConfigKey(bizKey);
                     continue;
                 }
 
                 //库存恢复
                 boolean ignoreReverseStock = Optional.ofNullable(freqQuery.getIgnoreReverseStock()).orElse(false);
-                for (Freq freqBO : freqBoList) {
-                    List<Item> itemBoList = freqBO.getItemList();
-                    String rateKey = freqBO.getRate().getKey();
-                    for (Item itemBO : itemBoList) {
-                        if ("stock".equals(itemBO.getType()) && !ignoreReverseStock) {
+                for (Freq freq : freqList) {
+                    List<Item> itemList = freq.getItemList();
+                    String rateKey = freq.getRate().getKey();
+                    for (Item item : itemList) {
+                        if ("stock".equals(item.getType()) && !ignoreReverseStock) {
                             FreqBuilder freqInfoBuilder = new FreqBuilder(cur);
-                            JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(itemBO, bizId, rateKey);
+                            JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(item, bizId, rateKey);
                             int ret = ((Long) jedisCluster.eval(FreqLuaScript.DECREASE,
                                     Collections.singletonList(freqInfo.getString("key")),
-                                    Arrays.asList(freqBO.getRate().getCnt().toString(),
-                                            itemBO.getAmount().toString(),
+                                    Arrays.asList(freq.getRate().getCnt().toString(),
+                                            item.getAmount().toString(),
                                             calcSeconds(cur, freqInfo.getLong("endTime")).toString()))).intValue();
                             if (ret == -1) {
-                                context.getRecorder().setBizIds(bizId).setStep("stockNegative").setItemBO(itemBO).record();
+                                context.getRecorder().setBizIds(bizId).setStep("stockNegative").setItem(item).record();
                                 break;
                             } else if (ret == 0) {
-                                context.getRecorder().setBizIds(bizId).setStep("stockZero").setItemBO(itemBO).record();
+                                context.getRecorder().setBizIds(bizId).setStep("stockZero").setItem(item).record();
                                 break;
                             } else {
-                                context.getRecorder().setBizIds(bizId).setStep("stockDecr").setItemBO(itemBO).record();
+                                context.getRecorder().setBizIds(bizId).setStep("stockDecr").setItem(item).record();
                             }
                         }
                     }
                 }
 
-                for (Freq freqBO : freqBoList) {
+                for (Freq freq : freqList) {
                     for (User user : users) {
-                        user.release(freqBO);
+                        user.release(freq);
                     }
                 }
             }
 
             for (User user : users) {
-                //TODO key ttl 设置
-                jedisCluster.set(Constants.FREQ_PREFIX + user.getId(), user.dump());
+                //key ttl 设置
+                log.info("freqReduce bizId:{}, value:{}", user.getId(), user.dump());
+                freqOperate(user);
             }
         } catch (Exception e) {
             log.error("reduceFreq error ", e);
@@ -395,7 +397,15 @@ public class FreqRepository {
         } finally {
             locker.releaseLock();
         }
-
         return Result.success(context.dump());
+    }
+
+    /**
+     * 频次操作
+     */
+    private void freqOperate(User user) {
+        int ttl = user.getMaxTimeToLiveSeconds();
+        jedisCluster.setex(Constants.FREQ_PREFIX + user.getId(), ttl, user.dump());
+        log.info("[FreqRepository_freqOperate] redisKey:{}, value:{}, ttl:{}", Constants.FREQ_PREFIX + user.getId(), user.dump(), ttl);
     }
 }

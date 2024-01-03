@@ -22,8 +22,8 @@ public class FreqRecorder implements Recorder, Cloneable {
 
     private String result;
 
-    public FreqRecorder setItemBO(Item itemBO) {
-        this.result = itemBO.getType() + "|" + itemBO.getUnit() + "|" + itemBO.getInterval();
+    public FreqRecorder setItem(Item item) {
+        this.result = item.getType() + "|" + item.getUnit() + "|" + item.getInterval();
         return this;
     }
 

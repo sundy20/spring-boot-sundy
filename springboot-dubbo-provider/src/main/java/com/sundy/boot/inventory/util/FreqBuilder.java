@@ -17,23 +17,23 @@ public class FreqBuilder {
         this.calendar = calendar;
     }
 
-    public JSONObject fetchFreqInfo(Item itemBO, String bizId, String bizKey) {
+    public JSONObject fetchFreqInfo(Item item, String bizId, String bizKey) {
         JSONObject t = new JSONObject();
-        t.put("key", fetchKey(itemBO, bizId, bizKey));
-        t.put("amount", itemBO.getAmount());
-        t.put("endTime", calcTime(itemBO));
+        t.put("key", fetchKey(item, bizId, bizKey));
+        t.put("amount", item.getAmount());
+        t.put("endTime", calcTime(item));
         return t;
     }
 
-    private String fetchKey(Item itemBO, String bizId, String bizKey) {
+    private String fetchKey(Item item, String bizId, String bizKey) {
         StringBuilder sb = new StringBuilder(Constants.FREQ_PREFIX);
-        sb.append(itemBO.getType());
+        sb.append(item.getType());
         sb.append("_");
-        sb.append(itemBO.getUnit());
+        sb.append(item.getUnit());
         sb.append("_");
-        sb.append(itemBO.getInterval());
+        sb.append(item.getInterval());
         sb.append("_");
-        if ("freq".equals(itemBO.getType())) {
+        if ("freq".equals(item.getType())) {
             sb.append(bizId);
             sb.append("_");
             sb.append(bizKey);
@@ -43,27 +43,27 @@ public class FreqBuilder {
         return sb.toString();
     }
 
-    private Long calcTime(Item itemBO) {
+    private Long calcTime(Item item) {
         Calendar cal = Calendar.getInstance();
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
-        if ("hour".equals(itemBO.getUnit())) {
+        if ("hour".equals(item.getUnit())) {
             cal.add(Calendar.HOUR_OF_DAY, 1);
         } else {
             cal.set(Calendar.HOUR_OF_DAY, 0);
-            if ("day".equals(itemBO.getUnit())) {
-                cal.add(Calendar.DAY_OF_YEAR, itemBO.getInterval());
-            } else if ("week".equals(itemBO.getUnit())) {
+            if ("day".equals(item.getUnit())) {
+                cal.add(Calendar.DAY_OF_YEAR, item.getInterval());
+            } else if ("week".equals(item.getUnit())) {
                 cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-                cal.add(Calendar.WEEK_OF_YEAR, itemBO.getInterval());
-            } else if ("month".equals(itemBO.getUnit())) {
+                cal.add(Calendar.WEEK_OF_YEAR, item.getInterval());
+            } else if ("month".equals(item.getUnit())) {
                 cal.set(Calendar.DAY_OF_MONTH, 1);
-                cal.add(Calendar.MONTH, itemBO.getInterval());
-            } else if ("action_range".equals(itemBO.getUnit())) {
-                cal.setTimeInMillis(itemBO.getEndTime());
+                cal.add(Calendar.MONTH, item.getInterval());
+            } else if ("action_range".equals(item.getUnit())) {
+                cal.setTimeInMillis(item.getEndTime());
             }
         }
         return cal.getTimeInMillis();

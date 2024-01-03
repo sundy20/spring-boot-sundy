@@ -32,14 +32,14 @@ public class FreqSync {
 
     public void sync(Set<Long> nids) {
         List<ItemDO> itemDOList = itemDAO.getItemDOs(nids);
-        Map<Long, ItemDO> itemDOMap = itemDOList.stream().collect(Collectors.toMap(ItemDO::getNid, Function.identity()));
+        Map<Long, ItemDO> itemDoMap = itemDOList.stream().collect(Collectors.toMap(ItemDO::getNid, Function.identity()));
         for (Long nid : nids) {
             try {
-                if (!itemDOMap.containsKey(nid)) {
+                if (!itemDoMap.containsKey(nid)) {
                     delFreq(nid);
                 } else {
-                    ItemDO freqItemDO = itemDOMap.get(nid);
-                    addFreq(freqItemDO.getNid(), freqItemDO.getAttribute());
+                    ItemDO itemDO = itemDoMap.get(nid);
+                    addFreq(itemDO.getNid(), itemDO.getAttribute());
                 }
             } catch (Exception e) {
                 log.error("sync single freq error freqId={}", nid, e);
@@ -60,12 +60,12 @@ public class FreqSync {
         if (attribute != null && attribute.containsKey(Constants.FREQ_EXT)) {
             JSONObject freqExt = (JSONObject) JSON.toJSON(attribute.get(Constants.FREQ_EXT));
             if (freqExt.containsKey("freqType") && "1".equalsIgnoreCase(freqExt.getString("freqType"))) {
-                Rate rateBO = new Rate();
-                rateBO.setKey(freqExt.getString("relationFreq"));
-                rateBO.setCnt(1L);
+                Rate rate = new Rate();
+                rate.setKey(freqExt.getString("relationFreq"));
+                rate.setCnt(1L);
                 String rateKey = Constants.FREQ_RATE_PREFIX + nid;
                 //TODO key ttl 设置
-                String ret = jedisCluster.set(rateKey, JSON.toJSONString(Collections.singletonList(rateBO)));
+                String ret = jedisCluster.set(rateKey, JSON.toJSONString(Collections.singletonList(rate)));
                 log.info("set freq_rate! rateKey:{},ret{}", rateKey, ret);
                 String itemKey = Constants.FREQ_ITEM_PREFIX + nid;
                 Long delRet = jedisCluster.del(itemKey);
@@ -87,25 +87,25 @@ public class FreqSync {
                 .map(JSONArray::parseArray)
                 .filter(e -> !e.isEmpty())
                 .map(e -> {
-                    JSONArray itemBOS = new JSONArray();
+                    JSONArray items = new JSONArray();
                     for (int i = 0; i < e.size(); ++i) {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.putAll(e.getJSONObject(i));
                         if ("action_range".equals(jsonObject.getString("unit")) && null != attribute.get("endTime")) {
                             jsonObject.put("endTime", attribute.get("endTime"));
                         }
-                        itemBOS.add(jsonObject);
+                        items.add(jsonObject);
                     }
                     String itemKey = Constants.FREQ_ITEM_PREFIX + nid;
                     //TODO key ttl 设置
-                    String ret = jedisCluster.set(itemKey, JSON.toJSONString(itemBOS));
+                    String ret = jedisCluster.set(itemKey, JSON.toJSONString(items));
                     log.info("set freq_item! itemKey:{},ret{}", itemKey, ret);
-                    Rate rateBO = new Rate();
-                    rateBO.setKey(nid.toString());
-                    rateBO.setCnt(1L);
+                    Rate rate = new Rate();
+                    rate.setKey(nid.toString());
+                    rate.setCnt(1L);
                     String rateKey = Constants.FREQ_RATE_PREFIX + nid;
                     //TODO key ttl 设置
-                    ret = jedisCluster.set(rateKey, JSON.toJSONString(Collections.singletonList(rateBO)));
+                    ret = jedisCluster.set(rateKey, JSON.toJSONString(Collections.singletonList(rate)));
                     log.info("set freq_rate! rateKey:{},ret{}", rateKey, ret);
                     return true;
                 }).orElseGet(() -> {
