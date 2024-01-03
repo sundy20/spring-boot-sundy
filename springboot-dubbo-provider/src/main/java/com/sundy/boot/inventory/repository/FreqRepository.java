@@ -256,9 +256,9 @@ public class FreqRepository {
                 }
 
                 boolean fc = false;
-                for (Freq freqBO : freqList) {
+                for (Freq freq : freqList) {
                     for (User user : users) {
-                        User.AvailResult availResult = user.avail(freqBO, "freq");
+                        User.AvailResult availResult = user.avail(freq, "freq");
                         if (!availResult.isAvail()) {
                             context.getRecorder().setBizIds(user.getId()).setStep("freqOverrun")
                                     .setResult(availResult.getKey() + ":" + availResult.getCnt())
@@ -276,22 +276,22 @@ public class FreqRepository {
                     for (Freq freq : freqList) {
                         List<Item> itemList = freq.getItemList();
                         String rateKey = freq.getRate().getKey();
-                        for (Item itemBO : itemList) {
-                            if ("stock".equals(itemBO.getType())) {
-                                JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(itemBO, bizId, rateKey);
+                        for (Item item : itemList) {
+                            if ("stock".equals(item.getType())) {
+                                JSONObject freqInfo = freqInfoBuilder.fetchFreqInfo(item, bizId, rateKey);
 
                                 int ret = ((Long) jedisCluster.eval(FreqLuaScript.INCRBY,
                                         Collections.singletonList(freqInfo.getString("key")),
                                         Arrays.asList(freq.getRate().getCnt().toString(),
-                                                itemBO.getAmount().toString(),
+                                                item.getAmount().toString(),
                                                 calcSeconds(cur, freqInfo.getLong("endTime")).toString()))).intValue();
                                 if (ret == 0) {
                                     fc = true;
-                                    context.getRecorder().setBizIds(bizId).setStep("stockOverrun").setItem(itemBO).record();
+                                    context.getRecorder().setBizIds(bizId).setStep("stockOverrun").setItem(item).record();
                                     context.save(bizKey, fc);
                                     throw new StockLimitException("stock limit, freqQuery:" + freqQuery);
                                 } else {
-                                    context.getRecorder().setBizIds(bizId).setStep("stockIncr").setItem(itemBO).record();
+                                    context.getRecorder().setBizIds(bizId).setStep("stockIncr").setItem(item).record();
                                 }
                             }
                         }
