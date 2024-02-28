@@ -1,4 +1,4 @@
-### macOs 13.4 m2 pro 工作环境配置
+### macOs 13.4 m2 pro work
 
 ###### mac基础配置：
 
