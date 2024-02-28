@@ -34,3 +34,6 @@ export PATH=$PATH:$MAVEN_HOME/bin
 谷歌、搜狗输入法、OmniGraffle、sublime、The Unarchiver、XMind8、StarUML、idea、XMind8、网易云音乐
 
 IDEA 2022.3.2 最优开发配置https://www.cnblogs.com/pkukhq/p/17172214.html
+
+![img_1.png](img_1.png)
+![img.png](img.png)
