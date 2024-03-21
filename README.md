@@ -49,7 +49,7 @@ sql 打印插件的集成
 
 统一异常处理
 
-mybatis 集成
+mybatis-plus 集成
 
 pagehelper 插件的集成
 
@@ -66,6 +66,8 @@ fastjson 集成
 java计算工具parsii的集成，强烈推荐这款计算工具，很强大
 
 环形队列/并发环形队列
+
+mapstruct 集成
 
 
 

@@ -29,7 +29,7 @@ public class SmsLogService {
 
         Query query = new Query(Criteria.where("phone").is(phone));
 
-        query.with(new Sort(Sort.Direction.DESC, "id"));
+        query.with(Sort.by(Sort.Direction.DESC, "id"));
 
         query.limit(1);
 
