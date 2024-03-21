@@ -49,7 +49,7 @@ sql 打印插件的集成
 
 统一异常处理
 
-mybatis-plus 集成
+mybatis-plus mybatis-plus-generator 集成
 
 pagehelper 插件的集成
 
