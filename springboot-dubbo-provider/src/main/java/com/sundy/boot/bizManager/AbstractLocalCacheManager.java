@@ -2,6 +2,7 @@ package com.sundy.boot.bizManager;
 
 import com.sundy.boot.utils.ThreadPollUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
@@ -34,13 +35,14 @@ public abstract class AbstractLocalCacheManager<T> implements ApplicationListene
     private ScheduledExecutorService scheduledExecutorService;
 
     /**
-     * refresh the data
+     * refresh the data size控制256 考虑内存溢出
      */
     public synchronized void refresh() {
         try {
             List<T> configs = load();
-            if (configs != null) {
-                configListCache.set(configs);
+            List<T> subConfigs = configs.subList(0, Math.min(configs.size(), 256));
+            if (CollectionUtils.isNotEmpty(subConfigs)) {
+                configListCache.set(subConfigs);
             }
         } catch (Throwable e) {
             log.error("{} cache refresh", traceName(), e);
@@ -55,13 +57,13 @@ public abstract class AbstractLocalCacheManager<T> implements ApplicationListene
                 refresh();
                 scheduledExecutorService = ThreadPollUtil.defineScheduledThreadPool(poolSize, threadNamePrefix);
                 scheduledExecutorService.scheduleWithFixedDelay(this::refresh, delay, delay, TimeUnit.SECONDS);
-                log.info("local cache initialized");
+                log.info("{} local cache initialized", traceName());
             } catch (Exception e) {
-                log.error("local cache exception", e);
-                throw new RuntimeException("local cache fail to initialized");
+                log.error("{} local cache exception", traceName(), e);
+                throw new RuntimeException(traceName() + " local cache fail to initialized");
             }
         } else {
-            log.info("local cache already initialed");
+            log.info("{} local cache already initialed", traceName());
         }
     }
 
