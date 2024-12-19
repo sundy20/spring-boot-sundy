@@ -171,7 +171,7 @@
             <dependency>
                 <groupId>com.scireum</groupId>
                 <artifactId>parsii</artifactId>
-                <version>3.1</version>
+                <version>4.0</version>
             </dependency>
 
             <!--swagger2 在线文档 -->
