@@ -9,6 +9,7 @@ import parsii.tokenizer.ParseException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 
 /**
  * Created on 2017/11/23
@@ -50,5 +51,12 @@ public class ParsiiTest {
         DecimalFormat df = new DecimalFormat("#0.00");
         String s = df.format(bigDecimal.doubleValue());
         System.out.println(s);
+
+        //获取当前日期
+        LocalDate now = LocalDate.now();
+        int monthDays = now.lengthOfMonth();
+        int passDays = now.getDayOfMonth()-1;
+        int remainDays = monthDays - passDays;
+        System.out.println("本月剩余天数：" + remainDays);
     }
 }
