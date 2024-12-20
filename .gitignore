@@ -14,3 +14,7 @@ target/
 .factorypath
 *.DS_Store
 .gitignore
+/springboot-dubbo-consumer/.flattened-pom.xml
+/springboot-dubbo-provider/.flattened-pom.xml
+/springboot-dubbo-share/.flattened-pom.xml
+/.flattened-pom.xml
