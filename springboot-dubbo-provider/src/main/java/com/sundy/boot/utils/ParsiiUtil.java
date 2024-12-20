@@ -10,9 +10,7 @@ import parsii.tokenizer.ParseException;
 import java.util.Map;
 
 /**
- * @author plus.wang
- * @description Parsii数学表达式解析工具
- * @date 2024/12/20
+ * Parsii数学表达式解析工具
  */
 public class ParsiiUtil {
 
@@ -30,9 +28,7 @@ public class ParsiiUtil {
         }
 
         Scope scope = new Scope();
-        params.forEach((k, v) -> {
-            scope.getVariable(k).setValue(v);
-        });
+        params.forEach((k, v) -> scope.getVariable(k).setValue(v));
 
         Expression expr = Parser.parse(expression, scope);
         return expr.evaluate();
