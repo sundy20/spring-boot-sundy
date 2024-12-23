@@ -21,7 +21,7 @@ public class ParsiiUtil {
      * @param params
      * @return
      */
-    public Double evaluate(String expression, Map<String, Double> params) throws ParseException {
+    public static Double evaluate(String expression, Map<String, Double> params) throws ParseException {
 
         if (StringUtils.isBlank(expression) || CollectionUtils.isEmpty(params)) {
             return null;
