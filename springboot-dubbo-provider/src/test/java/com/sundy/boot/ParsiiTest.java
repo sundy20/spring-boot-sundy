@@ -45,6 +45,9 @@ public class ParsiiTest {
         DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         System.out.println(decimalFormat.format(d));
 
+        DecimalFormat decimalFormat1 = new DecimalFormat("0.0#");
+        System.out.println(decimalFormat1.format(d));
+
         BigDecimal bigDecimal = new BigDecimal("123.496782");
         System.out.println(bigDecimal.setScale(2, RoundingMode.HALF_UP));
 
