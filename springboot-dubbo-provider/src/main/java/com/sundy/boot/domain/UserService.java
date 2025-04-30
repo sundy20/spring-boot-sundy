@@ -37,7 +37,7 @@ public class UserService {
             .maximumSize(1000)
             .build(new com.github.benmanes.caffeine.cache.CacheLoader<String, UserBean>() {
                 @Override
-                public @Nullable UserBean load(@NonNull String username) throws Exception {
+                public @Nullable UserBean load(@NonNull String username) {
                     return getUser(username);
                 }
             });
