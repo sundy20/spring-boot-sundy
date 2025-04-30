@@ -1,6 +1,5 @@
 package com.sundy.boot.domain;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -28,7 +27,7 @@ public class UserService {
                 }
             });
 
-    private Cache<String, UserBean> caffeineCache = Caffeine.newBuilder()
+    private com.github.benmanes.caffeine.cache.LoadingCache<String, UserBean> caffeineCache = Caffeine.newBuilder()
             .refreshAfterWrite(defaultTime + timeOut, TimeUnit.MILLISECONDS)
             .maximumSize(1000)
             .build(this::getUser);
