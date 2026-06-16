@@ -35,7 +35,7 @@ export PATH=$PATH:$MAVEN_HOME/bin
 
 ###### 软件安装：
 
-谷歌、搜狗输入法、OmniGraffle、sublime、The Unarchiver、XMind8、StarUML、idea、XMind8、网易云音乐
+谷歌、搜狗输入法、OmniGraffle、sublime、The Unarchiver、StarUML、idea、XMind8、网易云音乐
 
 IDEA 2022.3.2 最优开发配置： https://www.cnblogs.com/pkukhq/p/17172214.html
 提升工作效率，IDEA配置优化总结： https://juejin.cn/post/7323883238896353299
